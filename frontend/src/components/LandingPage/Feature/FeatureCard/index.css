@@ -1,0 +1,13 @@
+.feature-card-body{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-card-container{
+    margin-right: 100px;
+    margin-left: 100px;
+}
+
