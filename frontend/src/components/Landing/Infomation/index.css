@@ -1,0 +1,34 @@
+/* 공통적으로 들어가는 부분 */
+section .title{
+    color: #000;
+    text-align: center;
+}
+section .title h2{
+    font-size: 45px;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+section .title span{
+    color:#ff8342;
+}
+
+section .title p {
+    font-size: 18px;
+    color: #555;
+}
+
+
+section.information {
+    margin-bottom: 150px;
+
+}
+
+section.information .img-box{
+    width: 1400px;
+    height: 540px;
+    /* 위 50, 양옆 auto, 아래 0 */
+    margin: 50px auto 0;
+    background: url(./img/information.jpg) no-repeat center/cover;
+    position: relative;
+}

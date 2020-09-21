@@ -1,0 +1,39 @@
+section.main {
+    width: 100%;
+    /* 모니터 상에서 풀화면을 원할 때 사용합니다 */
+    height: 100vh;
+    background : url(./img/colour.jpg)no-repeat center/cover;
+    position: relative;
+    /* 백그라운드 이미지가 고정된다. */
+    background-attachment: fixed;
+    text-align: center;
+}
+
+section.main .main-title{
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    /* x y 퍼짐 색 */
+    text-shadow: 0 0 5px rgb(8, 8, 8, 0.5);
+    animation-name: main-title;
+    animation-duration: 1s;
+}
+
+
+@keyframes main-title{
+    0%{opacity: 0; top:60%;}
+    30%{opacity: 0; top:60%;}
+    100%{opacity: 1; top:50%;}
+}
+
+section.main h2{
+    font-size: 55px;
+    margin-bottom: 20px;
+}
+
+section.main p{
+    font-size: 25px;
+    margin-bottom: 30px;
+}

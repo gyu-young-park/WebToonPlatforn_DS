@@ -1,0 +1,66 @@
+footer{
+    clear:both;
+    border-top: 1px solid #999;
+    padding: 30px 0 50px;
+
+}
+
+footer .inner{
+    width: 1600px;
+    margin: 0 auto;
+    overflow:hidden;
+}
+
+footer .inner .ftLogo{
+    float:left;
+}
+
+footer .inner .address {
+    float:left;
+    margin-left: 100px;
+    margin-top:10px;
+}
+
+footer .inner .address li:first-child {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+footer .inner .address li:last-child{
+    color:#999;
+}
+
+footer .inner .list{
+    float:right;
+    font-family: 'Exo 2' sans-serif;
+}
+
+footer .inner .list li {
+    float: left;
+    margin-left:80px;
+    margin-top:10px;
+}
+
+footer .inner .list li a{
+    display: block;
+    width: 100%;
+    height:100%;
+    position: relative;
+    color: #000;
+}
+
+footer .inner .list li a:after{
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: #ccc;
+    position:absolute;
+    right:-50px;
+    top:10px;
+    border-radius: 50%;
+}
+
+footer .inner .list li a:hover, footer .inner .list li a:focus{
+    color:#ff8342;
+    text-decoration: underline;   
+}

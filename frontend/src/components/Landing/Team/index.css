@@ -1,0 +1,99 @@
+
+/* section.innovations */
+section.team {
+    margin-bottom: 150px;
+    padding: 80px 0;
+    background: rgb(240, 240, 240);
+}
+
+section.team ul.list{
+    width: 1400px;
+    margin: 50px auto;
+    
+    border-bottom: 2px solid #000;
+    border-top: 2px solid #000;
+}
+
+section.team ul.list > li{
+    padding: 30px 60px;
+    box-sizing: content-box;
+}
+
+section.team ul.list > li:nth-child(1){
+    border-bottom: 1px solid #ddd;
+}
+section.team ul.list li h3{
+    font-size: 18px;
+    margin-bottom: 20px;
+    position:relative;
+}
+
+section.team ul.list li h3 span{
+    position:absolute;
+    left: -35px;
+    color: #ff8392;
+}
+
+section.team ul.list li > p{
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+section.team ul.list li > a{
+    display: inline-block;
+    font-weight: bold;
+    font-size:16px;
+    line-height: 1.6;
+}
+
+section.team ul.list li > a span{
+    color: #ff8342;
+    font-weight: bold;
+    margin-left: 3px;
+    font-size:14px;
+}
+
+section.team ul.in {
+    margin-bottom: 30px;
+}
+
+section.team ul.in li{
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+section.team ul.in li em{
+    float: left;
+    width:12%;
+    font-weight: bold;
+}
+
+section.team ul.in li p{
+    float: left;
+    width: 88%;
+    position: relative;
+}
+
+section.team ul.in li p:before {
+    content:  '';
+    position: absolute;
+    left: -40px;
+    top: 10px;
+    width:4px;
+    height: 4px;
+    background: #ff8342;
+    border-radius: 50%;
+}
+
+section.team button {
+    display: block;
+    width: 280px;
+    background: #ff8342;
+    padding:10px 0;
+    font-weight: bold;
+    text-align: center;
+    margin: auto;
+    border: none;
+    border-radius: 50px;
+    color: #fff;
+}

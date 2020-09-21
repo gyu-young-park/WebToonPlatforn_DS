@@ -1,0 +1,97 @@
+
+/* 공통적으로 들어가는 부분 */
+section .title{
+    color: #000;
+    text-align: center;
+}
+section .title h2{
+    font-size: 45px;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+section .title span{
+    color:#ff8342;
+}
+
+section .title p {
+    font-size: 18px;
+    color: #555;
+}
+
+/*section.about*/
+section.about {
+    background: #fff;
+    padding: 80px 0;
+}
+
+section.about ul {
+    margin: 30px auto;
+    width: 1400px;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+}
+/* 자식 요소에 float를 넣었으니 부모 요소의 높이 값 상실 */
+section.about ul li {
+    float: left;
+    width: 33.333%;
+}
+
+section.about ul li a{
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+section.about ul li a p.img{
+    width: 100%;
+    height: 369px;
+    overflow: hidden;
+}
+
+section.about ul li a p.img img{
+    width: 100%;
+    height: auto;
+    transition: all 0.8s;
+}
+
+section.about ul li a:hover p.img img, section.about ul li a:focus p.img img{
+    transform: scale(1.2);
+    transition: all 1s;
+}
+
+section.about ul li a .text{
+    padding: 30px;
+}
+
+section.about ul li a .text h3{
+    font-size:20px;
+    margin-bottom: 10px;
+}
+
+section.about ul li a .text p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+section.about ul li a .text p.more{
+    text-transform: uppercase;
+    padding-left: 40px;
+    font-weight: bold;
+    position: relative;
+}
+/* line-height는 width, height가 같으면 가운데 정렬한다. */
+section.about ul li a .text p.more:before{
+    content: '\f178';
+    font-family: FontAwesome;
+    font-size: 15px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    color: #ff8342;
+    position: absolute;
+    left: 0;
+    display:block;
+    border-radius: 50%;
+}
