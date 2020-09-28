@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {BrowserRouter , Link, Route} from "react-router-dom";
 import LandingPage from './components/Landing'
+import selfToImagePage from "./pages/selfToImagePage";
 import '../node_modules/antd/dist/antd.css';
 import Header from "./components/Header";
 import Footer from './components/Footer'
@@ -11,6 +12,7 @@ export default function App(){
         <BrowserRouter>
             <Header/>
             <Route exact path={"/"} component={LandingPage}/>
+            <Route exact path={"/self2image"} component={selfToImagePage}/>
             <Footer/>
         </BrowserRouter>
     )

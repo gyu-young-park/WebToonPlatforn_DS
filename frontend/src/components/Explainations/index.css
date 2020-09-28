@@ -1,0 +1,69 @@
+.display-wrapper{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: url('./img/anime_background.png') no-repeat center/cover;
+    margin: 100px auto;
+    justify-content: center;
+}
+
+.wrapper{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1600px;
+    height: 90%;
+    /* margin: 50px auto; */
+    background: rgba(250, 252, 255, 0.9);
+    border-radius: 50px;
+    display: flex;
+    flex-flow: column;
+    justify-items: center;
+    text-align: center;
+
+}
+
+.title{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-family: 'Gamja Flower', cursive;
+    font-size: 50px;
+}
+
+.image-wrapper{
+    margin-top: 20px;
+    width: 100%;
+    height: 600px;
+}
+
+.image-content{
+    width: 500px;
+    height: 500px;
+    margin: 1px auto;
+    background: url('./img/original.png') no-repeat center/cover;
+    animation-name: main-title;
+    animation-duration: 1s;
+    border: 2px solid black;
+    border-radius: 5px;
+    box-shadow: 5px 10px #d8d8d8;
+    
+}
+
+.image-content:hover{
+    background: url('./img/result.png') no-repeat center/cover;
+}
+
+@keyframes main-title{
+    0%{opacity: 0; top:60%;}
+    30%{opacity: 0; top:60%;}
+    100%{opacity: 1; top:50%;}
+}
+
+.image-explain{
+    font-family: 'Gamja Flower', cursive;
+}
+
+.btn-start{
+    min-width: 250px;
+}

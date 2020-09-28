@@ -13,7 +13,6 @@ const Footer = () => {
                 <ul className="list">
                     <li><a href="#">고객 문의</a></li>
                     <li><a href="#">공지사항</a></li>
-                    
                 </ul>
             </div>
         </footer>
