@@ -15,9 +15,6 @@ SPECIAL_TOKENS = ['<unk>', '<pad>', '<sos>', '<eos>']
 
 # 음절 단위로 vocab을 형성한다. 
 class CharTokenizer(object):
-    def __name__(self):
-      
-  __main__.CharTokenizer
     def __init__(self, i2c):
         self.init(i2c)
 
@@ -42,6 +39,7 @@ class CharTokenizer(object):
         return cls(i2c) # init을 호출하면서 return
 
 def get_tokenizer():
+  import pandas as pd
   # 전체 문자열 가져오기
   df = pd.read_csv('webtoon_comments_labeled.csv',encoding='utf-16')
   comment = df['comment'].tolist()
@@ -54,3 +52,11 @@ def get_tokenizer():
   tokenizer = CharTokenizer([])
   tokenizer= CharTokenizer.from_strings(comment, len(char_set)-217)
   return tokenizer
+
+def text_to_tensor(tokenizer, comment):
+  #main에서 torch 선언해야함 import torch
+  comment = [data for data in comment]
+  comment = comment + [tokenizer.vocab['<pad>'] for _ in range(128-len(comment))]
+  data = tokenizer.__call__(comment)
+  return torch.tensor(data)
+
