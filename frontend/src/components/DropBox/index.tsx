@@ -4,7 +4,6 @@ import cloud from './img/cloud_uploade.png'
 import person from './img/person.png'
 import rightArrow from './img/rightArrow.png'
 import './index.css'
-import { read } from 'fs';
 
 const url ="http://localhost:5000/"
 const config = {     

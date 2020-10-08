@@ -1,6 +1,5 @@
 import * as React from 'react'
 import './index.css'
-import original from './img/original.png'
 
 const Explainations = () => {
     return(

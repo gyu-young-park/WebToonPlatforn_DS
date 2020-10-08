@@ -1,0 +1,54 @@
+.radio-button-group{
+    outline:0;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.webtoon-genre-title{
+    margin:20px auto;
+    text-align: center;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.webtoon-genre-desc{
+    color: #000; /* Fallback for older browsers */
+    color: rgba(0, 0, 0, 0.3);
+}
+
+.webtoon-genre-list{
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.radio-button{
+    margin: 10px 20px;
+    border-radius: 3px;
+    outline: none;
+    font-size: 20px;
+}
+
+.webtoon-rank-group{
+    margin: 40px auto;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row;
+}
+
+.webtoon-rank-desc{
+    margin-top:20px;
+    width: 12%;
+    height: 100%;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.webtoon-rank-card-group{
+    width: 88%;
+}

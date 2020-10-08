@@ -1,0 +1,23 @@
+.webtoon-list-container{
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 400px;
+    margin: 10px auto;
+}
+
+.webtoon-card-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+}
+
+.webtoon-list-title{
+    width: 100%;
+    font-family: 'Gamja Flower', cursive;
+    margin: 1px auto;
+}

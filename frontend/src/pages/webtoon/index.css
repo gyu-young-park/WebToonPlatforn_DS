@@ -1,0 +1,24 @@
+.webtoon-page{
+    position: relative;
+    margin: 140px auto;
+}
+
+.webtoon-carousel-container{
+    width: 1400px;
+    height: 300px;
+    margin: 0px auto;
+}
+
+.webtoon-rank-container{
+    width: 1400px;
+    height: 100%;
+    margin: 50px auto;
+}
+
+.webtoon-gene-list{
+    display: flex;
+    flex-flow: column;
+    width: 1400px;
+    height: 100%;
+    margin: 20px auto;
+}
