@@ -11,15 +11,15 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # 동희가 수정한 부분
 # import torch
 # import json
-# from text_to_tensor import get_tokenizer,text_to_data
+# from text_to_tensor import get_tokenizer,text_to_data, infer
 # tokenizer = get_tokenizer()
+
 # 여기는  text to tensor 예시
-# comment = "화련이랑 싸우면 누가 이기려나"
-# data,mask = text_to_tensor(tokenizer, comment)
-# output = model(data, ~mask) -> 0,1,2 중 하나
-# _, predicted = torch.max(output.data, 1)
-# predicted = predicted.squeeze().tolist() -> 0,1,1 중 하나를 반환하게 됨
-# res = json.dumps({"label" : predicted})
+# comments = []
+# comments.append("화련이랑 싸우면 누가 이기려나")
+# data = text_to_data(tokenizer, comments)
+# labels = infer(model, data) # json 을 리턴. ex - {"labels" : [0,1,1]}
+
 
 @app.route('/')
 @cross_origin()
