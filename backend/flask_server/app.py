@@ -11,7 +11,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 # 동희가 수정한 부분
 # import torch
 # import json
-# from text_to_tensor import get_tokenizer,text_to_data, infer
+# from comment_functions import get_tokenizer,text_to_data, infer
 # tokenizer = get_tokenizer()
 
 # 여기는  text to tensor 예시
