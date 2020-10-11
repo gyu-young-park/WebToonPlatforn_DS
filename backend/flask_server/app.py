@@ -10,13 +10,16 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 # 동희가 수정한 부분
 # import torch
-# from text_to_tensor import get_tokenizer,text_to_tensor
+# import json
+# from text_to_tensor import get_tokenizer,text_to_data
 # tokenizer = get_tokenizer()
 # 여기는  text to tensor 예시
 # comment = "화련이랑 싸우면 누가 이기려나"
-# res = text_to_tensor(tokenizer, comment)
-# print(res) -> 길이 128인 tensor 데이터 반환(comment 길이 + 나머지는 0 padding)
-# model(res) -> 0,1,2 중 하나
+# data,mask = text_to_tensor(tokenizer, comment)
+# output = model(data, ~mask) -> 0,1,2 중 하나
+# _, predicted = torch.max(output.data, 1)
+# predicted = predicted.squeeze().tolist() -> 0,1,1 중 하나를 반환하게 됨
+# res = json.dumps({"label" : predicted})
 
 @app.route('/')
 @cross_origin()
