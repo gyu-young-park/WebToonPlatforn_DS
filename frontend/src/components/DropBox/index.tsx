@@ -5,6 +5,7 @@ import person from './img/person.png'
 import rightArrow from './img/rightArrow.png'
 import './index.css'
 
+//flask server
 const url ="http://localhost:5000/"
 const config = {     
     headers: { 'content-type': 'multipart/form-data' }
@@ -23,7 +24,7 @@ const DropBox = () =>{
             let formData = new FormData()
             if(base64data != null){
                 formData.append("userImage", base64data)
-                const res = await axios.post(url+'gan/ugotit', formData, config)
+                const res = await axios.post('/gan/ugotit', formData, config)
                 console.log(res)
             }
         }

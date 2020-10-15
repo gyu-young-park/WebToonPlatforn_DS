@@ -6,13 +6,18 @@ import '../node_modules/antd/dist/antd.css';
 import Header from "./components/Header";
 import Footer from './components/Footer'
 import webtoonPage from './pages/webtoon'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css'
+
 export default function App(){
     return(
         <BrowserRouter>
             <Header/>
             <Route exact path={"/"} component={LandingPage}/>
+            <Route exact path={"/login"} component={LoginPage}/>
+            <Route exact path={"/register"} component={RegisterPage}/>
             <Route exact path={"/self2image"} component={selfToImagePage}/>
             <Route exact path={"/webtoon"} component={webtoonPage}/>
             <Footer/>
