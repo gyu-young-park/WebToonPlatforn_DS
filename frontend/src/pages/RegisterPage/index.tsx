@@ -2,7 +2,8 @@ import React, {useState} from 'react'
 import './index.css'
 import {useDispatch} from 'react-redux'
 import {registerUser} from '../../_actions/user_action'
-
+import { Form, Input, Button, Checkbox } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 const RegisterPage  = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
@@ -33,7 +34,7 @@ const RegisterPage  = () => {
 
     const onRegisterSubmitHandler = async (e : React.FormEvent<HTMLFormElement>) => {
         //누를 때마다 페이지 리프레시가 된다.
-        e.preventDefault()
+        
         if(password !== confirmPassword){
             return alert("비밀번호와 비밀번호 확인은 같아야 합니다.")
         }
@@ -55,8 +56,32 @@ const RegisterPage  = () => {
     }
 
     return (
-        <div className="login-form-container">
-            <form className= "login-form" onSubmit={onRegisterSubmitHandler}>
+        <div className="register-container">
+            <div className="register-form-container">
+                <div className="register-form-title-container">
+                    <h2>webtoon</h2>
+                </div>
+                <Form name="normal_login" className="register-form" initialValues={{remember: true,}} onFinish={onRegisterSubmitHandler}>
+                    <Form.Item name="userEmail" rules={[{required: true,message: 'Please input your Email!',},]}>
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" onChange={onEmailHandler}/>
+                    </Form.Item>
+                    <Form.Item name="userName" rules={[{required: true,message: 'Please input your Username!',},]}>
+                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="name" onChange={onNameHandler}/>
+                    </Form.Item>
+                    <Form.Item name="userPassword" rules={[{required: true,message: 'Please input your Password!',},]}>
+                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="password" onChange={onPasswordHandler}/>
+                    </Form.Item>
+                    <Form.Item name="userPasswordConfirm" rules={[{required: true,message: 'Please input your Password Confirm!',},]}>
+                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password"placeholder="Password" onChange={onConfirmPasswordHandler}/>
+                    </Form.Item>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" className="login-form-button">Register</Button>
+                        <br/>
+                        <a href="/login">Do you already have an account?</a>
+                    </Form.Item>
+                </Form>
+            </div>
+            {/* <form className= "login-form" onSubmit={onRegisterSubmitHandler}>
                 <label>Email</label>
                 <input type="email" value={email} onChange={onEmailHandler} />
                 <label>Name</label>
@@ -67,7 +92,7 @@ const RegisterPage  = () => {
                 <input type="password" value={confirmPassword} onChange={onConfirmPasswordHandler}/>
                 <br/>
                 <button>회원 가입</button>
-            </form>
+            </form> */}
         </div>
     )
 }

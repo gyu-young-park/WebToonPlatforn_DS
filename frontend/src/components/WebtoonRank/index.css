@@ -7,6 +7,10 @@
     font-family: 'Do Hyeon', sans-serif;
 }
 
+.webtoon-genre-container{
+    margin-top:150px;
+}
+
 .webtoon-genre-title{
     margin:20px auto;
     text-align: center;

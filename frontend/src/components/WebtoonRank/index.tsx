@@ -7,7 +7,7 @@ import banana from '../../pages/webtoon/img/banana.webp'
 import dont from '../../pages/webtoon/img/dont.png'
 import soundOnMind from '../../pages/webtoon/img/soundOnMind.jpg'
 import reba from '../../pages/webtoon/img/reba.webp'
-import satbeal from '../../pages/webtoon/img/con.jpg'
+import satbeal from '../../pages/webtoon/img/satbeal.jpg'
 
 const cardStyleOption = {
     width: '200px',
@@ -51,7 +51,7 @@ const WebtoonRank  = () => {
         setRankName(e.target.value)
     }
     return(
-        <div>
+        <div className = "webtoon-genre-container">
             <div className="webtoon-genre-title">
                 <h5 className="webtoon-genre-desc">가장 인기있는 작품</h5>
                 <h2 className="">실시간 작품 랭킹!</h2>

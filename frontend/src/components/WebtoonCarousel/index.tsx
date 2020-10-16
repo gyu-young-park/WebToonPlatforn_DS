@@ -8,7 +8,7 @@ import {LeftOutlined, RightOutlined} from '@ant-design/icons';
 import './index.css'
 
 const styleOfCarousel = {
-    height: "300px",
+    height: "375px",
     width: "1400px",
     display: 'flex',
     flexFlow: 'row',
