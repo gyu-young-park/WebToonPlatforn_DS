@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react'
-import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { auth } from '../_actions/user_action'
 // hoc :  high order function 으로 컴포넌트를 wrap한 다음 enhanced component를 리턴한다. 여기서는 인증 처리 로직을 담당하여 로그인한 사람만 들어갈 수 있도록 컴포넌트를 제작한다.
@@ -14,26 +13,29 @@ const authHoc = (SpecificComponent, option , adminRoute = null) => {
         const distpatch = useDispatch()
         useEffect(()=>{
             distpatch(auth()).then((res) => {
-                console.log(res.payload)
                 //로그인하지 않은 상태
-                if(!res.payload.isAuth){
+                console.log("auth "  + res.payload)
+                if(!res.payload){
                     if(option){
-                        window.location.href = "/login"
+                        // window.location.href = "/login"
+                        props.history.push("/login")
                     }
                 }else{
                     //로그인한 상태
-                    if(adminRoute && !res.payload.userRole){
-                        window.location.href = "/"
+                    if(adminRoute){
+                        // window.location.href = "/"
+                        props.history.push("/")
                     }else{
                         if(option == false){
-                            window.location.href = "/"
+                            props.history.push("/")
+                            // window.location.href = "/"
                         }
                     }
                 }
             })
         },[])
         return (
-            <SpecificComponent/>
+            <SpecificComponent {...props}/>
         )
     }
     return AuthenticationCheck

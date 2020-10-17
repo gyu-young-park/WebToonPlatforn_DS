@@ -2,11 +2,6 @@ import React , {useEffect} from 'react'
 import axios from 'axios'
 import './index.css';
 const Main = () => {
-    useEffect(() => {
-        axios.get("/api/hello").then(res => {
-            console.log(res)
-        })
-    },[])
     return(
         <section className="main">
             <div className="main-title">

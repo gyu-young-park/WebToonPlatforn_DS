@@ -4,7 +4,8 @@ import {useDispatch} from 'react-redux'
 import {loginUser} from '../../_actions/user_action'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-const LoginPage  = () => {
+import { RouteComponentProps} from 'react-router'
+const LoginPage : React.FC<RouteComponentProps>  = (props : RouteComponentProps) => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -30,10 +31,10 @@ const LoginPage  = () => {
         //return값으로 redux값이 온다.
         const res : any = await dispatch(loginUser(body))
         //로그인 성공
-        if(res.payload.loginSuccess){
-            window.location.href = "/"
+        if(res.payload){
+            props.history.push("/")
         }else{
-
+            alert("login failed")
         }
     }
 

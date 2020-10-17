@@ -1,0 +1,142 @@
+.webtoon-specific-page-container{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    max-width: 1200px;
+    margin: 150px auto;
+    height: 100%;
+    color: white;
+}
+
+.webtoon-specific-page-left-container{
+    position: relative;
+    width: 420px;
+    height:100%;
+    background: #000;
+}
+
+.webtoon-specific-page-left-img-container{
+    position: relative;
+    width: 100%;
+    height: 100%;;
+}
+
+.webtoon-specific-page-left-img-container::before{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    content: '';
+    z-index: 2;
+    background-image: linear-gradient(rgba(0,0,0,0.5), transparent 23%, transparent 32%, rgba(0,0,0,0.05) 42%, rgba(0,0,0,0.1) 50%, #000);
+}
+
+.webtoon-specific-page-left-image{
+    position: relative;
+    width: 100%;
+}
+
+.webtoon-specific-page-left-content{
+    width: 100%;
+    height: 300px;
+    position: relative;
+    z-index: 2;
+}
+
+.webtoon-specific-page-left-content-title{
+    font-weight:800;
+    margin: 0px 10px;
+    color: white
+}
+
+.webtoon-specific-page-left-content-btns1{
+    position: relative;
+    width: 100%;
+    margin: 40px auto;
+}
+
+#webtoon-specific-jjim-btn{
+    font-size:15px;
+    color: white;
+    background-color: rgb(68, 68, 68);
+    padding: 12px 15px;
+    border-radius: 20px;
+    margin: 0px 10px;
+}
+
+#webtoon-specific-like-btn{
+    font-size:15px;
+    color: white;
+    background-color: rgb(68, 68, 68);
+    padding: 10px 10px;
+    border-radius: 50%;
+    margin: 0px 10px;
+}
+
+#webtoon-specific-dislike-btn{
+    font-size:15px;
+    color: white;
+    background-color: rgb(68, 68, 68);
+    padding: 10px 10px;
+    border-radius: 50%;
+    margin: 0px 10px;
+}
+
+.webtoon-specific-page-left-content-explain{
+    position: relative;
+    width: 100%;
+}
+
+#webtoon-specific-page-left-content-explaination{
+    color:white;
+    font-size:20px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.webtoon-specific-page-left-content-btns2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    font-weight:800;
+    position: relative;
+    width: 100%;
+}
+
+#webtoon-specific-purchase-btn{
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    border: 1px solid #EB0026;
+    border-radius: 30px;
+    padding: 10px 20px;
+}
+
+
+#webtoon-specific-first-episode-btn{
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    border: 1px solid #EB0026;
+    background-color: #EB0026;
+    border-radius: 30px;
+    padding: 10px 20px;
+}
+
+.webtoon-specific-page-right-container{
+    width: 780px;
+    margin: 0px 20px;
+}
+
+.webtoon-specific-page-right-list-item-avatar{
+    width: 100px;
+}
+
+.webtoon-specific-page-right-list-item-desc{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
