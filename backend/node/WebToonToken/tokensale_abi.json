@@ -12,6 +12,10 @@
 		"constant": false,
 		"inputs": [
 			{
+				"name": "author",
+				"type": "string"
+			},
+			{
 				"name": "amount",
 				"type": "uint256"
 			}
