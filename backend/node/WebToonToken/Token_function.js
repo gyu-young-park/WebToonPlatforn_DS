@@ -2,7 +2,7 @@
 const Caver = require('caver-js')
 const caver = new Caver('https://api.baobab.klaytn.net:8651/')
 const abi = require('./tokensale_abi.json')
-const contract = new caver.klay.Contract(abi, '0x405d06e53a00fed8f2fcd6e6a8e24a94905cfe11')
+const contract = new caver.klay.Contract(abi, '0x8ddce0eef61897d90b389bc28441fd4478b76e0a')
 
 module.exports.balanceOf = async function(_address, _pk){
     try{
