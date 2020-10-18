@@ -2,7 +2,7 @@
 const Caver = require('caver-js')
 const caver = new Caver('https://api.baobab.klaytn.net:8651/')
 const abi = require('./tokensale_abi.json')
-const contract = new caver.klay.Contract(abi, '0x4e6b5473c0aaf77ef938376146102e6a658769f8')
+const contract = new caver.klay.Contract(abi, '0x405d06e53a00fed8f2fcd6e6a8e24a94905cfe11')
 
 module.exports.balanceOf = async function(_address, _pk){
     try{
@@ -36,13 +36,13 @@ module.exports.buy_token = async function(_address, _pk, amount){
       console.log(e);
     }
 }
-module.exports.buy_webtoon = async function(_address, _pk, amount){
+module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구매자 지갑주소, 구매자 pk, 구매 웹툰 제목, 토큰량
     try{
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.add(account)
 
-        contract.methods.buy_webtoon(amount)
+        contract.methods.buy_webtoon(title,amount)
         .send({from: _address, gas:300000})
         .on('error', function(hash){console.error("Error : "+hash)})
         .on('receipt',function(){// 남은 토큰 잔고를 알려준다.
