@@ -37,6 +37,12 @@ def run_model():
     # image_file = Image.open(imageUrl)
     return image_data
 
+@app.route('/nlp/comment_classify', methods=['GET'])
+@cross_origin()
+def run_comment_classify():
+    
+    #return으로 json 결과를 주떼엽><
+
 
 #debug가 되어있다면, 실시간으로 코드 변경이 적용된다.
 if __name__ == "__main__":

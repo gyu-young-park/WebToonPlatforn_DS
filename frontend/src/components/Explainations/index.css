@@ -25,21 +25,21 @@
 }
 
 .title{
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 10px;
     font-family: 'Gamja Flower', cursive;
-    font-size: 50px;
+    font-size: 30px;
 }
 
 .image-wrapper{
-    margin-top: 20px;
+    margin-top: 10px;
     width: 100%;
-    height: 600px;
+    height: 500px;
 }
 
 .image-content{
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     margin: 1px auto;
     background: url('./img/original.png') no-repeat center/cover;
     animation-name: main-title;

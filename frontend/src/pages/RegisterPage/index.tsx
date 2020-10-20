@@ -45,10 +45,11 @@ const RegisterPage  = () => {
         }
         //loginUser action을 사용
         //return값으로 redux값이 온다.
+        //payload 값으로 success가 온다.
         const res : any = await dispatch(registerUser(body))
         //회원가입 성공
-        console.log(res)
-        if(res.payload.success){
+        console.log("result", res)
+        if(res.payload){
             window.location.href = "/login"
         }else{
             alert("Failed to sign up")
