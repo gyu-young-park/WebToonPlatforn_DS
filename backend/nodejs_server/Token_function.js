@@ -9,10 +9,10 @@ module.exports.balanceOf = function(_address, _pk){
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.add(account)
-        return contract.methods.balanceOf(_address).call(null,function(err,result){
-            if(err!=null){return {"state": false, "err":err}}
-            else return {"state":true,"result":result}
-        })
+        const res = contract.methods.balanceOf(_address).call(null)
+        wallet.remove(_address)
+        if(result.err){return {"err":result.err}}
+        return res
     }catch(e){
       console.log(e);
     }
@@ -24,11 +24,10 @@ module.exports.buy_token = function(_address, _pk, amount){
         wallet.add(account)
 
         const result = contract.methods.buy_token().send({from: _address, gas:300000,value:caver.utils.toHex(caver.utils.toPeb(amount.toString(),"peb"))})
+        wallet.remove(_address)
         if(result.err){return {"err":result.err}}
-        return contract.methods.balanceOf(_address).call(null,function(err,result){
-            if(err!=null){return {"state": false, "err":err}}
-            else return {"state":true,"result":result}
-        })
+        const res = contract.methods.balanceOf(_address).call(null)
+        return res
     }catch(e){
       console.log(e);
     }
@@ -40,11 +39,10 @@ module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구
         wallet.add(account)
 
         const result = contract.methods.buy_webtoon(title,amount).send({from: _address, gas:300000})
+        wallet.remove(_address)
         if(result.err){return {"err":result.err}}
-        return contract.methods.balanceOf(_address).call(null,function(err,result){
-            if(err!=null){return {"state": false, "err":err}}
-            else return {"state":true,"result":result}
-        })
+        const res = contract.methods.balanceOf(_address).call(null)
+        return res
     }catch(e){
       console.log(e);
     }
@@ -64,16 +62,11 @@ module.exports.mint = async function(){
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.add(account)
 
-        contract_wtt.methods.mint()
-        .send({from: _address,gas: 300000})
-        .on('error', function(hash){console.error("Error : "+hash)})
-        .on('receipt',function(){// 남은 토큰 잔고를 알려준다.
-            contract.methods.balanceOf(_address).call(null,function(err,result){
-                if(err!=null){return {"state": false, "err":err}}
-                else return {"state":true,"result":result}
-            })
-        })
-
+        const result = contract_wtt.methods.mint().send({from: _address,gas: 300000})
+        wallet.remove(_address)
+        if(result.err){return {"err":result.err}}
+        const res = contract.methods.balanceOf(_address).call(null)
+        return res
     }catch(e){
         console.log(e)
     }
