@@ -8,12 +8,20 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-# 동희가 수정한 부분
+# dhsimpson - comment classifier
 import torch
 import pandas as pd
 import json
 from comment_functions import get_tokenizer,text_to_data, infer
 import comment_model
+
+tokenizer = get_tokenizer()
+model_comment = comment_model.load_model()
+
+# dhsimpson - face detector
+from facenet_pytorch import MTCNN
+
+mtcnn = MTCNN(image_size=512, margin=200)
 
 
 '''
@@ -41,6 +49,10 @@ def run_model():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
     # imageUrl = request.form.get("userImage")
     images = Image.open(BytesIO(base64.b64decode(image_data)))
+
+    images_cropped = mtcnn(images)
+    # webtoonify = ugotit(images_cropped)
+
     images.save("file_image.png")
     print(images, file=sys.stdout)
     # image_file = Image.open(imageUrl)
