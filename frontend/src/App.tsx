@@ -11,6 +11,7 @@ import RegisterPage from './pages/RegisterPage'
 import WebtoonSpecificPage from './pages/webtoonSpecificPage'
 import WebtoonImagePage from './pages/webtoonImagePage'
 import AuthorAdminPage from './pages/authorAdminPage'
+import AuthorAdminCommentPage from './pages/authorAdminCommentPage'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css'
 import Auth from './hoc/auth'
@@ -42,6 +43,7 @@ const App = () => {
             <Route path={"/webtoonSpecific/:id/:name"} component={Auth(WebtoonSpecificPage, true)}/>
             <Route path={"/webtoonImagePage/:index/:title"} component={Auth(WebtoonImagePage, true)}/>
             <Route path={"/webtoon/author/admin/:email/:name"} component={Auth(AuthorAdminPage, true)}/>
+            <Route path={"/webtoon/author/admin/:email/:name/comment"} component={Auth(AuthorAdminCommentPage, true)}/>
             {isHeaderShow === true ? <Footer/> : null}
         </BrowserRouter>
     )

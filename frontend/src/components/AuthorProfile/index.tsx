@@ -16,7 +16,7 @@ const AuthorProfile : React.FC<IAuthorProfileProps> = (props : IAuthorProfilePro
         console.log(tokenCount)
     },[tokenCount])
     useEffect(()=>{
-        //retriveToken()
+        retriveToken()
         return () => {
             isCancelled.current = true;
           };

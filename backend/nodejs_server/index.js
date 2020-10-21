@@ -118,19 +118,20 @@ output :
     success: true,
     balance: 호출자 잔고
 }
+
+{
+    success: false
+}
 */
 
 // 토큰 잔고를 알려줌
-app.post('/api/token/token_amount',auth, async (req,res)=>{
+app.post('/api/token/token_amount', async (req,res)=>{
     //token_functions
-    
-    const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
-    const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
-    const res_token = await token_functions.balanceOf(req.body.user.public_key,req.body.user.private_key)//req.user.public_key,req.user.private_key
-    // if(res_token == false) return res.json({success:false})
-    return res.json({
+    const res_token = await token_functions.balanceOf(req.body.user.public_key, req.body.user.private_key)//req.user.public_key,req.user.private_key
+    if(!res_token.success) return res.json({success:false})
+    return res.status(200).json({
         success: true,
-        balance: res_token
+        balance: res_token.balance
     })
 
 })
@@ -149,20 +150,19 @@ output :
     success: true,
     balance: 토큰구매자 잔고
 }
+
+{
+    success: false
+}
 */
 // 토큰 구매 후 성공하면 잔고를 알려줌
-app.post('/api/token/token_buy',auth, async (req,res)=>{
+app.post('/api/token/token_buy', async (req,res)=>{
 
-    const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
-    const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
-    const amount = 10
-
-    const res_token = await token_functions.buy_token(pbk,pk,amount)//req.user.public_key,req.user.private_key,req.amount
-
-    if(res_token.err) return res.json({success:false})
+    const res_token = await token_functions.buy_token(req.body.user.public_key,req.body.user.private_key,req.body.user.amount)//req.user.public_key,req.user.private_key,req.amount
+    if(!res_token.success)return res.json({success:false})
     return res.status(200).json({
-        state: true,
-        balance: res_token
+        success: true,
+        balance: res_token.balance
     })
 })
 
@@ -181,8 +181,13 @@ output :
     success: true,
     balance: 웹툰구매자 잔고
 }
+
+{
+    success: false
+}
 */
 // 웹툰 구매 후 성공하면 잔고를 알려줌
+<<<<<<< HEAD
 app.get('/api/token/webtoon_buy', async (req,res)=>{
     const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
     const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
@@ -193,9 +198,14 @@ app.get('/api/token/webtoon_buy', async (req,res)=>{
     console.log(res_token)
 
     if(res_token.err) return res.json({success:false})
+=======
+app.post('/api/token/webtoon_buy', async (req,res)=>{
+    const res_token = await token_functions.buy_webtoon(req.body.user.public_key, req.body.user.private_key, req.body.user.title, req.body.user.amount)
+    if(!res_token.success) return res.json({success:false})
+>>>>>>> d56ea825ad83b354a7c45d6a457d902a53c4aac6
     return res.status(200).json({
-        state: true,
-        balance: res_token
+        success: true,
+        balance: res_token.balance
     })
 })
 

@@ -2,34 +2,34 @@
 const Caver = require('caver-js')
 const caver = new Caver('https://api.baobab.klaytn.net:8651/')
 const abi = require('./tokensale_abi.json')
-const contract = new caver.klay.Contract(abi, '0x8ddce0eef61897d90b389bc28441fd4478b76e0a')
+const contract = new caver.klay.Contract(abi, '0xc27db9173a26fa1362a2cd2002399c57f3cd600e')//<-now : 제목으로 address 등록하기, 가져오기 추가한 컨트랙트   prev-> 0x8ddce0eef61897d90b389bc28441fd4478b76e0a
 
-module.exports.balanceOf = function(_address, _pk){
+module.exports.balanceOf = async function(_address, _pk){
     try{
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.add(account)
-        const res = contract.methods.balanceOf(_address).call(null)
+        const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
-        if(result.err){return {"err":result.err}}
-        return res
+        return {"success":true,"balance":res}
     }catch(e){
       console.log(e);
+      wallet.remove(_address)
+      return {"success":false}
     }
 }
-module.exports.buy_token = function(_address, _pk, amount){
+module.exports.buy_token = async function(_address, _pk, amount){
     try{
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.add(account)
-
-        const result = contract.methods.buy_token().send({from: _address, gas:300000,value:caver.utils.toHex(caver.utils.toPeb(amount.toString(),"peb"))})
+        const result = await contract.methods.buy_token().send({from: _address, gas:300000,value:caver.utils.toHex(caver.utils.toPeb(amount.toString(),"peb"))})
+        const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
-        if(result.err){return {"err":result.err}}
-        const res = contract.methods.balanceOf(_address).call(null)
-        return res
+        return {"success":true,"balance":res}
     }catch(e){
       console.log(e);
+      return {"success":false}
     }
 }
 module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구매자 지갑주소, 구매자 pk, 구매 웹툰 제목, 토큰량
@@ -37,14 +37,13 @@ module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.add(account)
-
-        const result = contract.methods.buy_webtoon(title,amount).send({from: _address, gas:300000})
+        const result = await contract.methods.buy_webtoon(title,amount).send({from: _address, gas:300000})
+        const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
-        if(result.err){return {"err":result.err}}
-        const res = contract.methods.balanceOf(_address).call(null)
-        return res
+        return {"success":true,"balance":res}
     }catch(e){
       console.log(e);
+      return {"success":false}
     }
 }
 // 토큰이 전부 소진됐을 때, 토큰 충전해주는 함수
@@ -62,12 +61,12 @@ module.exports.mint = async function(){
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.add(account)
 
-        const result = contract_wtt.methods.mint().send({from: _address,gas: 300000})
+        const result = await contract_wtt.methods.mint().send({from: _address,gas: 300000})
+        const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
-        if(result.err){return {"err":result.err}}
-        const res = contract.methods.balanceOf(_address).call(null)
-        return res
+        return {"success":true,"balance":res}
     }catch(e){
         console.log(e)
+        return {"success":false}
     }
 }

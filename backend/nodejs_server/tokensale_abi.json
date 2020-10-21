@@ -12,7 +12,7 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "author",
+				"name": "title",
 				"type": "string"
 			},
 			{
@@ -31,6 +31,44 @@
 		"inputs": [],
 		"name": "endSale",
 		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "title",
+				"type": "string"
+			}
+		],
+		"name": "get_address",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "title",
+				"type": "string"
+			}
+		],
+		"name": "regist_address",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
