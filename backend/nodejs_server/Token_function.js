@@ -2,7 +2,7 @@
 const Caver = require('caver-js')
 const caver = new Caver('https://api.baobab.klaytn.net:8651/')
 const abi = require('./tokensale_abi.json')
-const contract = new caver.klay.Contract(abi, '0xc27db9173a26fa1362a2cd2002399c57f3cd600e')//<-now : 제목으로 address 등록하기, 가져오기 추가한 컨트랙트   prev-> 0x8ddce0eef61897d90b389bc28441fd4478b76e0a
+const contract = new caver.klay.Contract(abi, '0x6b6ec73a628ba712e31bb7d8895d60ecd45e9238')//<-now : 제목으로 address 등록하기, 가져오기 추가한 컨트랙트   prev-> 0x8ddce0eef61897d90b389bc28441fd4478b76e0a
 
 module.exports.balanceOf = async function(_address, _pk){
     try{
@@ -40,6 +40,31 @@ module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구
         const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
         return {"success":true,"balance":res}
+    }catch(e){
+      console.log(e);
+      return {"success":false}
+    }
+}
+// 작품명으로 작가 address를 가져오는 함수
+module.exports.get_address = async function(title){
+    try{
+        const res = await contract.methods.get_address(title).call(null)
+        return {"success":true,"address":res}//string
+    }catch(e){
+      console.log(e);
+      return {"success":false}
+    }
+}
+// 작품에 작가 address를 등록하는 함수
+module.exports.regist_address = async function(_address, _pk, title){
+    try{
+        const wallet = caver.klay.accounts.wallet
+        const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
+        wallet.add(account)
+        const res = await contract.methods.regist_address(title).send({from: _address, gas:300000})
+        //const res = await contract.methods.balanceOf(_address).call(null)
+        wallet.remove(_address)
+        return {"success":true,"regist":res}//bool
     }catch(e){
       console.log(e);
       return {"success":false}
