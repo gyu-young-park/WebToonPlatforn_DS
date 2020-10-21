@@ -9,6 +9,7 @@ Original file is located at
 
 # 토크나이저 define
 from collections import Counter, defaultdict
+import torch
 
 SPECIAL_TOKENS = ['<unk>', '<pad>', '<sos>', '<eos>']
 
@@ -57,28 +58,40 @@ def text_to_data(tokenizer, comments, src_max_seq_length=128):
   if not isinstance(comments,list):
     print("comments is not list.")
     return None
-  import torch
   src_padded = []
   src_mask = []
   for comment in comments:
     comment = [data for data in comment]
-    len_comment = len(comment)
+    len_comment = min(len(comment),src_max_seq_length)
     comment = comment + [tokenizer.vocab['<pad>'] for _ in range(128-len(comment))]
     data = tokenizer.__call__(comment)
-    data = data
+    data = data[:src_max_seq_length]
     src_padded.append(data)
     src_mask.append([1]*len_comment + [tokenizer.vocab['<pad>']]*(src_max_seq_length-len_comment))
+  
   src_padded = torch.tensor(src_padded).t().contiguous()
   src_mask = torch.tensor(src_mask).bool()
   return src_padded,src_mask
 
-def infer(model,data=None):
+def infer(model,data=None, device="cpu"):
   import json
   if data is None:
     print("You got wrong data : None")
     return None
   src, src_mask = data
-  output = model_unit(src=src.to(device),src_key_padding_mask=~src_mask.to(device))
+  output = model(src=src.to(device),src_key_padding_mask=~src_mask.to(device))
   _, predicted = torch.max(output.data, 1)
-  labels = json.dumps({"labels" : predicted.tolist()})
-  return labels
+  #labels = json.dumps({"labels" : predicted.tolist()})
+  return list(zip(predicted.tolist(),output.tolist()))
+
+# def infer(model,data=None):
+#   import json
+#   if data is None:
+#     print("You got wrong data : None")
+#     return None
+#   src, src_mask = data
+#   output = model_unit(src=src.to(device),src_key_padding_mask=~src_mask.to(device))
+#   _, predicted = torch.max(output.data, 1)
+#   #labels = json.dumps({"labels" : predicted.tolist(),"accuracy":output.tolist()})
+#   #return labels
+#   return zip(predicted.tolist(),output.tolist())

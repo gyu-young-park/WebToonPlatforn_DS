@@ -7,6 +7,7 @@ const { User } = require('./models/User')
 const config = require('./config/key')
 const cookieParser = require('cookie-parser')
 const { auth } = require('./middleware/auth')
+const token_functions = require('./Token_function')
 // 아래처럼 bodyParser 옵션을 설정해주면 자동으로 들어오는 데이터를 parsing해준다. 가령 json으로 파싱
 //application/x-www-from-urlencoded 로 오는 데이터가 오는 것을 분석해서 가져올 수 있게 한다.
 app.use(bodyParser.urlencoded({extended: true}))
@@ -96,5 +97,110 @@ app.get('/api/users/logout', auth, (req,res) => {
         })
     })
 })
+
+
+// 현재 보유량
+//api/token/token_amount
+//api/token/token_buy
+//api/token/webtoon_buy
+//api/admin/mint
+
+/*
+input :
+{
+    user:{
+        public_key: "공개키",
+        private_key: "개인키"
+    }
+}
+output :
+{
+    success: true,
+    balance: 호출자 잔고
+}
+*/
+
+// 토큰 잔고를 알려줌
+app.post('/api/token/token_amount',auth, async (req,res)=>{
+    //token_functions
+    
+    const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
+    const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
+
+    const res_token = await token_functions.balanceOf(req.user.public_key,req.user.private_key)//req.user.public_key,req.user.private_key
+    if(res_token.err) return res.json({success:false})
+    return res.status(200).json({
+        success: true,
+        balance: res_token
+    })
+    
+})
+
+
+/*
+input :
+{
+    user:{
+        public_key: "공개키",
+        private_key: "개인키",
+        amount: "토큰구매량"
+    }
+}
+output :
+{
+    success: true,
+    balance: 토큰구매자 잔고
+}
+*/
+// 토큰 구매 후 성공하면 잔고를 알려줌
+app.post('/api/token/token_buy',auth, async (req,res)=>{
+
+    const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
+    const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
+    const amount = 10
+
+    const res_token = await token_functions.buy_token(pbk,pk,amount)//req.user.public_key,req.user.private_key,req.amount
+
+    if(res_token.err) return res.json({success:false})
+    return res.status(200).json({
+        state: true,
+        balance: res_token
+    })
+})
+
+/*
+input :
+{
+    user:{
+        public_key: "공개키",
+        private_key: "개인키",
+        title: "웹툰제목",
+        amount: "토큰구매량"
+    }
+}
+output :
+{
+    success: true,
+    balance: 웹툰구매자 잔고
+}
+*/
+// 웹툰 구매 후 성공하면 잔고를 알려줌
+app.get('/api/token/webtoon_buy', async (req,res)=>{
+
+    const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
+    const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
+    const title = "freedraw"
+    const amount = 10
+
+    const res_token = await token_functions.buy_webtoon(req.user.public_key, req.user.private_key, req.title, req.amount)
+    console.log(res_token)
+
+    if(res_token.err) return res.json({success:false})
+    return res.status(200).json({
+        state: true,
+        balance: res_token
+    })
+})
+
 
 app.listen(port , () => console.log(`server started ${port}`))
