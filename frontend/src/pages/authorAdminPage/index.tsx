@@ -16,10 +16,13 @@ import AuthorProfile from '../../components/AuthorProfile'
 import {IWebtoonAuthorAdminPageProps} from '../../data/interface/IWebtoonAuthorAdminPageProps'
 import AuthorAdminDounet from '../../components/AuthorAdminDounet'
 import AuthorAdminBarChart from '../../components/AuthorAdminBarChart'
+import AuthorAdminCommentPage from '../authorAdminCommentPage'
+import AuthorAdminSteganoPage from '../authorAdminSteganoPage'
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 const AuthorAdminPage : React.FC<IWebtoonAuthorAdminPageProps> = (props : IWebtoonAuthorAdminPageProps) => {
     const [collapsed, setCollapsed] = useState<boolean>(true)
+    const [pageKey, setPageKey] = useState<string>("1")
     const dispatch = useDispatch()
     dispatch(adminPageOn())
     const onCollapseHandler = (collapsed: boolean, type: CollapseType) => {
@@ -32,12 +35,16 @@ const AuthorAdminPage : React.FC<IWebtoonAuthorAdminPageProps> = (props : IWebto
         props.history.push('/')
         const res = dispatch(adminPageOff())
     }
+    const onLayerClickHandler = (event : any) => {
+        console.log(event.key)
+        setPageKey(event.key)
+    }
     return (
         <div>
             <Layout style={{ minHeight: '100vh' }}>
                 <Sider collapsible collapsed={collapsed} onCollapse={onCollapseHandler}>
                 <div className="logo-admin" />
-                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+                <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" onClick={onLayerClickHandler}>
                     <Menu.Item key="1" icon={<PieChartOutlined />}>
                     대쉬보드
                     </Menu.Item>
@@ -45,8 +52,8 @@ const AuthorAdminPage : React.FC<IWebtoonAuthorAdminPageProps> = (props : IWebto
                     덧글 확인
                     </Menu.Item>
                     <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-                    <Menu.Item key="3">랭킹</Menu.Item>
-                    <Menu.Item key="4">정산</Menu.Item>
+                    <Menu.Item key="3">보안 연구실</Menu.Item>
+                    <Menu.Item key="4">랭킹</Menu.Item>
                     <Menu.Item key="5">공지사항</Menu.Item>
                     </SubMenu>
                 </Menu>
@@ -63,16 +70,27 @@ const AuthorAdminPage : React.FC<IWebtoonAuthorAdminPageProps> = (props : IWebto
                             <Breadcrumb.Item>User</Breadcrumb.Item>
                             <Breadcrumb.Item>Bill</Breadcrumb.Item>
                         </Breadcrumb>
-                        <div className="admin-page-content-container" style={{ padding: 24, minHeight: 360 }}>
-                            <div className="author-information-container">
-                                <AuthorProfile name={name} email={email} />
-                            </div>
-                            <div className="author-purchase-chart-container">
-                                <AuthorAdminBarChart/>
-                                <AuthorAdminDounet/>
-                                <AuthorAdminDounet/>
-                            </div>
-                        </div>
+                        {
+                            pageKey === "1" ? (
+                                <div className="admin-page-content-container" style={{ padding: 24, minHeight: 360 }}>
+                                    <div className="author-information-container">
+                                        <AuthorProfile name={name} email={email} />
+                                    </div>
+                                    <div className="author-purchase-chart-container">
+                                        <AuthorAdminBarChart/>
+                                        <AuthorAdminDounet/>
+                                        <AuthorAdminDounet/>
+                                    </div>
+                                </div>
+                            ) : 
+                            (pageKey ==="2" ? <div>
+                                <AuthorAdminCommentPage/>
+                            </div> :
+                            <>
+                                <AuthorAdminSteganoPage/>
+                            </>)
+                        }
+                        
                     </Content>
                     <Footer style={{ textAlign: 'center' }}></Footer>
                 </Layout>

@@ -12,13 +12,7 @@ const proxyFunction = (app) => {
             changeOrigin: true,
         })
     )
-    // app.use(
-    //     '/gan',
-    //     createProxyMiddleware({
-    //         target: 'http://localhost:5000',
-    //         changeOrigin: true,
-    //     })
-    // )
+    
     
 }
 

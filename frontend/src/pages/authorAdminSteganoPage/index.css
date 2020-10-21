@@ -1,0 +1,43 @@
+.author-admin-stegano-lab-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    
+}
+
+.author-admin-stegano-lab-encoder-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgb(226, 243, 255);
+    background: #ececec;
+}
+
+.author-admin-stegano-lab-upload{
+    position: relative;
+    width: 50%;
+    margin:auto auto;
+    height: 50%;
+}
+
+.author-admin-stegano-lab-result{
+    width: 100%;
+    height: 50%;
+    object-fit: cover;
+}
+
+.author-admin-stegano-lab-btns{
+    margin-top: 20px;
+}
+.author-admin-stegano-lab-decoder-container{
+    width: 45%;
+    height: 50%;
+    margin: 0px auto;
+    border: 1px solid rgb(226, 243, 255);
+    background: white;
+}

@@ -22,13 +22,13 @@ const DropBox = () =>{
         reader.onload = async function(event){
             let base64data = event?.target?.result as string
             let formData = new FormData()
+            
             if(base64data != null){
                 formData.append("userImage", base64data)
                 const res = await axios.post(url+'/gan/ugotit', formData, config)
                 console.log(res)
             }
         }
-        console.log(e.target.files[0])
         reader.readAsDataURL(e.target.files[0])
     }
 

@@ -93,28 +93,25 @@ def run_comment_classify():
 @app.route('/gan/stegano_encode', methods=['POST'])
 @cross_origin()
 def run_stegano_encoder():
-
     image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
     # imageUrl = request.form.get("userImage")
     images = Image.open(BytesIO(base64.b64decode(image_data)))
-
     # steganoimg name => "stegano_of_input_"
     output_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
-
     # KEY value
     ############ request keys ############
-    block_keys = ""
+    block_keys = request.form['userKey']
     ##########################################
-
+    
     # stegano encoding
     try:
-        stegano_encoder.stegano_encode(images, output_img_path, block_keys)
-        return 1
-    except:
-        return 0
+        stegano_encoder.stegano_encode(images, "./", block_keys)
+        return jsonify({"state" : True})
+    except Exception as e:
+        return jsonify({"state" : False})
 
 
-@app.route('/gan/stegano/decode', methods=['POST'])
+@app.route('/gan/stegano_decode', methods=['POST'])
 @cross_origin()
 def run_stegano_decoder():
 

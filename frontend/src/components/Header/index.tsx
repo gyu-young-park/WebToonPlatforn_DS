@@ -26,7 +26,7 @@ const Header = () => {
                     <ul>
                         <li ><a href="#" onClick={onLogoutHandler}><i className="fa fa-hourglass-start" aria-hidden="true"></i>로그아웃</a></li>
                         <li ><a href="#"><i className="fa fa-hourglass-start" aria-hidden="true"></i>개발자</a></li>
-                        <li ><a href="#"><i className="fa fa-hourglass-start" aria-hidden="true"></i>더 알아보기</a></li>
+                        <li ><a href="/webtoon/author/admin/baba@naver.com/banana"><i className="fa fa-hourglass-start" aria-hidden="true"></i>내 정보</a></li>
                     </ul>
                 </nav>
             </div>

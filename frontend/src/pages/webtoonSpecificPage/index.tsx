@@ -7,7 +7,7 @@ import soundOnMind from '../webtoon/img/soundOnMind.jpg'
 import reba from '../webtoon/img/reba.webp'
 import satbeal from '../webtoon/img/satbeal.jpg'
 import {CardItem} from '../../data/type/cardItem'
-import { List, Avatar } from 'antd';
+import { List } from 'antd';
 import banana1 from './img/banana/1.jpg'
 import banana2 from './img/banana/2.jpg'
 import banana3 from './img/banana/3.jpg'
@@ -89,12 +89,10 @@ const data = [
     },
       
   ];
-  
 const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
     const index = props.match.params.id
     const title = props.match.params.name
-
-
+    
     return (
         <div className="webtoon-specific-page-container">
             <div className="webtoon-specific-page-left-container">
