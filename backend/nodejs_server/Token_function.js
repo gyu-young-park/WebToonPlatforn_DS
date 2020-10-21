@@ -2,7 +2,7 @@
 const Caver = require('caver-js')
 const caver = new Caver('https://api.baobab.klaytn.net:8651/')
 const abi = require('./tokensale_abi.json')
-const contract = new caver.klay.Contract(abi, '0x8ddce0eef61897d90b389bc28441fd4478b76e0a')
+const contract = new caver.klay.Contract(abi, '0xc27db9173a26fa1362a2cd2002399c57f3cd600e')//<-now : 제목으로 address 등록하기, 가져오기 추가한 컨트랙트   prev-> 0x8ddce0eef61897d90b389bc28441fd4478b76e0a
 
 module.exports.balanceOf = async function(_address, _pk){
     try{
