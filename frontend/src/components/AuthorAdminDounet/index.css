@@ -1,0 +1,10 @@
+.author-admin-dougnet-chart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ececec;
+    padding:30px;
+    width: 30%;
+    height: 370px;
+    margin-left: 20px;
+}

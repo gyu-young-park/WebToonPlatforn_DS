@@ -126,20 +126,18 @@ app.post('/api/token/token_amount',auth, async (req,res)=>{
     
     const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
     const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
-
-    const res_token = await token_functions.balanceOf(req.user.public_key,req.user.private_key)//req.user.public_key,req.user.private_key
-    if(res_token.err) return res.json({success:false})
-    return res.status(200).json({
+    const res_token = await token_functions.balanceOf(req.body.user.public_key,req.body.user.private_key)//req.user.public_key,req.user.private_key
+    // if(res_token == false) return res.json({success:false})
+    return res.json({
         success: true,
         balance: res_token
     })
-    
+
 })
 
 
-/*
-input :
-{
+/*dsdsdsds
+{dsdsdsdsrsds
     user:{
         public_key: "공개키",
         private_key: "개인키",
@@ -186,7 +184,6 @@ output :
 */
 // 웹툰 구매 후 성공하면 잔고를 알려줌
 app.get('/api/token/webtoon_buy', async (req,res)=>{
-
     const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
     const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
     const title = "freedraw"

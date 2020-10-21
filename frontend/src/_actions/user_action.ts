@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { LOGIN_USER, REGISTER_USER, AUTH_USER } from './action_types'
+import { LOGIN_USER, REGISTER_USER, AUTH_USER, ADMIN_PAGE_ON , ADMIN_PAGE_OFF} from './action_types'
 import { loginType } from '../data/type/loginType'
 import { registerType } from '../data/type/registerType'
 //action -> reducer(preState, action) : nextState
@@ -24,6 +24,20 @@ export const auth = async () => {
     return{
         type: AUTH_USER,
         payload: res.data.isAuth
+    }
+}
+
+export const adminPageOn = () => {
+    return{
+        type: ADMIN_PAGE_ON,
+        payload: false
+    }
+}
+
+export const adminPageOff = () => {
+    return{
+        type: ADMIN_PAGE_OFF,
+        payload: true
     }
 }
 

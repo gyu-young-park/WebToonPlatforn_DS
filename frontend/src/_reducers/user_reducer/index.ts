@@ -1,16 +1,18 @@
-import { LOGIN_USER, REGISTER_USER ,AUTH_USER } from '../../_actions/action_types'
+import { LOGIN_USER, REGISTER_USER ,AUTH_USER, ADMIN_PAGE_OFF, ADMIN_PAGE_ON } from '../../_actions/action_types'
 import { IAction } from '../../data/interface/IAction'
 
 type userLoginType = {
     isLogin : boolean,
     isRegister : boolean,
-    isAuth : boolean
+    isAuth : boolean,
+    isHeaderAndFooterOn: boolean
 }
 
 const initialState : userLoginType = {
     isAuth : false,
     isRegister: false,
-    isLogin : false
+    isLogin : false,
+    isHeaderAndFooterOn: true
     
 }
 const userLoginReducer = (state : userLoginType = initialState, action : IAction ) => {
@@ -24,6 +26,12 @@ const userLoginReducer = (state : userLoginType = initialState, action : IAction
             break;
         case AUTH_USER:
             return { ...state, isAuth : action.payload}
+            break;
+        case ADMIN_PAGE_ON:
+            return { ...state, isHeaderAndFooterOn : action.payload}
+            break;
+        case ADMIN_PAGE_OFF:
+            return { ...state, isHeaderAndFooterOn : action.payload}
             break;
         default:
             return state

@@ -7,6 +7,7 @@ import { applyMiddleware, createStore, compose } from 'redux'
 import promiseMiddleware from 'redux-promise'
 import reduxThunk from 'redux-thunk'
 import Reducer from './_reducers'
+import {BrowserRouter} from 'react-router-dom'
 //redux와 미들웨어 연결 typescript 버전
 declare global {
   interface Window {
@@ -18,11 +19,9 @@ const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,reduxThunk)(
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 ReactDOM.render(
   <React.StrictMode>
-    <Provider 
-      store={createStoreWithMiddleware(Reducer)}
-    >
-      <App />
-    </Provider>
+      <Provider store={createStoreWithMiddleware(Reducer)}>
+          <App />
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
