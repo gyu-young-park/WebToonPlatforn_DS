@@ -197,5 +197,62 @@ app.post('/api/token/webtoon_buy', async (req,res)=>{
     })
 })
 
+/*
+input :
+{
+    user:{
+        title: "웹툰제목"
+    }
+}
+output :
+{
+    success: true,
+    address: 웹툰작품 작가의 공개키 주소
+}
+
+{
+    success: false
+}
+*/
+// For 준범님
+// 워터마크를 위한 작가 공개키 주소가 나옴
+app.get('/api/token/author_address', async (req,res)=>{
+    const res_token = await token_functions.get_address(req.body.user.title)
+    if(!res_token.success) return res.json({success:false})
+    return res.status(200).json({
+        success: true,
+        address: res_token.address
+    })
+})
+
+/*
+input :
+{
+    user:{
+        public_key: "공개키",
+        private_key: "개인키",
+        title: "웹툰제목"
+    }
+}
+output :
+{
+    success: true,
+    regist: bool(등록 성공여부. 현재는 무조건 등록되도록 돼있음)
+}
+
+{
+    success: false
+}
+*/
+// 작품 명으로 작가 공개키 주소를 등록
+app.post('/api/token/regist_address', async (req,res)=>{
+    const res_token = await token_functions.regist_address(req.body.user.public_key, req.body.user.private_key, req.body.user.title)
+    if(!res_token.success) return res.json({success:false})
+    return res.status(200).json({
+        success: true,
+        regist: res_token.regist
+    })
+})
+
 
 app.listen(port , () => console.log(`server started ${port}`))
