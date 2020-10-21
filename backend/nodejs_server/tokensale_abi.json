@@ -43,25 +43,6 @@
 				"type": "string"
 			}
 		],
-		"name": "get_address",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "title",
-				"type": "string"
-			}
-		],
 		"name": "regist_address",
 		"outputs": [
 			{
@@ -118,6 +99,25 @@
 			{
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "title",
+				"type": "string"
+			}
+		],
+		"name": "get_address",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
 			}
 		],
 		"payable": false,
