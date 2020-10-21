@@ -15,6 +15,18 @@ import json
 from comment_functions import get_tokenizer,text_to_data, infer
 import comment_model
 
+
+'''
+shin++ 15:05, 2020/10/21 head
+'''
+import os
+import stegano_encoder
+import stegano_decoder
+'''
+shin++ 15:05, 2020/10/21 tail
+'''
+
+
 tokenizer = get_tokenizer()
 model_comment = comment_model.load_model()
 
@@ -64,11 +76,59 @@ def run_comment_classify():
     label_0.sort(key = lambda label_0: label_0[2], reverse=True)
     label_1.sort(key = lambda label_1: label_1[2], reverse=True)
     label_2.sort(key = lambda label_2: label_2[2], reverse=True)
-    
+
     return jsonify({"label_0":label_0,
                         "label_1":label_1,
                         "label_2":label_2})
     #return으로 json 결과를 주떼엽><
+
+
+
+
+'''
+shin++ 14:10, 2020/10/21 head
+'''
+@app.route('/gan/stegano_encode', methods=['POST'])
+@cross_origin()
+def run_stegano_encoder():
+
+    image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
+    # imageUrl = request.form.get("userImage")
+    images = Image.open(BytesIO(base64.b64decode(image_data)))
+
+    # steganoimg name => "stegano_of_input_"
+    output_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
+
+    # KEY value
+    ############ request keys ############
+    block_keys = ""
+    ##########################################
+
+    # stegano encoding
+    try:
+        stegano_encoder.stegano_encode(images, output_img_path, block_keys)
+        return 1
+    except:
+        return 0
+
+
+@app.route('/gan/stegano/decode', methods=['POST'])
+@cross_origin()
+def run_stegano_decoder():
+
+    # steganoimg name => "stegano_of_input_"
+    stegano_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
+
+    decoded_msg = stegano_decoder._stegano_decode(stegano_img_path)
+
+    return decoded_msg
+
+'''
+shin++ 14:10, 2020/10/21 tail
+'''
+
+
+
 
 
 #debug가 되어있다면, 실시간으로 코드 변경이 적용된다.
