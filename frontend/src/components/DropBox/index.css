@@ -52,3 +52,9 @@
     height: 500px;
     margin: auto auto;
 }
+
+.wrapper-webtoon-title-btns{
+    position: absolute;
+    display: flex;
+    float: row;
+}
