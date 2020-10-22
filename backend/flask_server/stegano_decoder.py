@@ -1,11 +1,10 @@
 #!/usr/bin/env python3.6
 import os
 
-def _stegano_decode(stegano_img, steg=os.path.join("/stegano_pretrained/", "dense")):
+def _stegano_decode(stegano_img, steg=os.path.join("./", "dense")):
 
 
-    from steganogan import SteganoGAN
-    from steganogan.decoders import DenseDecoder
+    from stegano_moldel_ import SteganoGAN
 
     steganogan = SteganoGAN.load(steg, cuda=False)
 

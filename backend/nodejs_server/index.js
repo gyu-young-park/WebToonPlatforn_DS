@@ -85,7 +85,9 @@ app.get('/api/users/auth', auth , (req, res) => {
         email: req.user.email,
         name: req.user.name,
         lastname: req.user.lastname,
-        image: req.user.image
+        image: req.user.image,
+        publicKey :req.user.publicKey,
+        privateKey : req.user.privateKey 
     })
 })
 
@@ -158,7 +160,9 @@ output :
 // 토큰 구매 후 성공하면 잔고를 알려줌
 app.post('/api/token/token_buy', async (req,res)=>{
 
+
     const res_token = await token_functions.buy_token(req.body.user.public_key,req.body.user.private_key,req.body.user.amount)//req.user.public_key,req.user.private_key,req.amount
+    
     if(!res_token.success)return res.json({success:false})
     return res.status(200).json({
         success: true,
