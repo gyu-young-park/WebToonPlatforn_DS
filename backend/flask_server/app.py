@@ -61,6 +61,9 @@ shin++ 15:05, 2020/10/21 tail
 tokenizer = get_tokenizer()
 model_comment = comment_model.load_model()
 
+
+torch.cuda.empty_cache()
+
 @app.route('/')
 @cross_origin()
 def index():

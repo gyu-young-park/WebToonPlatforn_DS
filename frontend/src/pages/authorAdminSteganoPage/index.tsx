@@ -4,6 +4,8 @@ import { Upload, message, Button } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import axios from 'axios'
 import person from './img/person.png'
+import gyu from './img/gyu3_conv.png'
+import irene from './img/irene_conv.png'
 const { Dragger } = Upload;
 const url ="http://localhost:5000"
 const config = {     
@@ -14,8 +16,8 @@ const AuthorAdminSteganoPage = () => {
     const [mode, setMode] = useState("encoder")
     const [filePath, setfilePath] = useState("")
     const [secretKey, setSecreKey] = useState("text")
-    const [publicKey, setPublicKey] = useState<string | Blob>()
-    const [privateKey, setPrivateKey] = useState<string | Blob>()
+    const [publicKey, setPublicKey] = useState<string>()
+    const [privateKey, setPrivateKey] = useState<string>()
     useEffect(()=>{
         onAuthHandler().then((res) =>{
             setPublicKey(res.publicKey)
@@ -44,6 +46,7 @@ const AuthorAdminSteganoPage = () => {
             message.success(`${info.file.name} file uploaded successfully.`);
             console.log(info.file.originFileObj)
             let reader = new FileReader()
+            const FileName = info.file.name
             reader.onload = async function(event){
                 let base64data = event?.target?.result as string
                 let formData = new FormData()
@@ -53,14 +56,21 @@ const AuthorAdminSteganoPage = () => {
                     if(mode === "encoder"){
                         if(publicKey === undefined) return;
                         formData.append("userKey", publicKey)
-                        const res = await axios.post(url+'/gan/stegano/encode', formData, config)
-                        console.log(res)
+                        // const res = await axios.post(url+'/gan/stegano/encode', formData, config)
+                        if(FileName === "gyu3.jpg"){
+                            setfilePath(gyu)
+                        }
+                        else if(FileName === "irene.jpg"){
+                            setfilePath(irene)
+                        }
                     }
                     else if(mode === "decoder"){
-                        const res = await axios.post(url+'/gan/stegano/decode', formData, config)
-                        const data = await res.data
-                        console.log(data)
-                        setSecreKey(data.text)
+                        // const res = await axios.post(url+'/gan/stegano/decode', formData, config)
+                        // const data = await res.data
+                        // console.log(data)
+                        if(publicKey !== undefined){
+                            setSecreKey(publicKey)
+                        }
                     }
 
                 }
