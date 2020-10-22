@@ -25,10 +25,10 @@ module.exports.buy_token = async function(_address, _pk, amount){
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.remove(_address)
         wallet.add(account)
-        const result = await contract.methods.buy_token().send({from: _address, gas:300000,value:caver.utils.toHex(caver.utils.toPeb(amount.toString(),"peb"))})
+        const receipt = await contract.methods.buy_token().send({from: _address, gas:300000,value:caver.utils.toHex(caver.utils.toPeb(amount.toString(),"peb"))})
         const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
-        return {"success":true,"balance":res}
+        return {"success":true,"balance":res, "receipt" : receipt}
     }catch(e){
       console.log(e);
       wallet.remove(_address)
@@ -41,10 +41,10 @@ module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
         wallet.remove(_address)
         wallet.add(account)
-        const result = await contract.methods.buy_webtoon(title,amount).send({from: _address, gas:300000})
+        const receipt = await contract.methods.buy_webtoon(title,amount).send({from: _address, gas:300000})
         const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
-        return {"success":true,"balance":res}
+        return {"success":true,"balance":res, "receipt" : receipt}
     }catch(e){
       console.log(e);
       wallet.remove(_address)
@@ -93,10 +93,10 @@ module.exports.mint = async function(){
         wallet.remove(_address)
         wallet.add(account)
 
-        const result = await contract_wtt.methods.mint().send({from: _address,gas: 300000})
+        const receipt = await contract_wtt.methods.mint().send({from: _address,gas: 300000})
         const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
-        return {"success":true,"balance":res}
+        return {"success":true,"balance":res, "receipt" : receipt}
     }catch(e){
         console.log(e)
         return {"success":false}

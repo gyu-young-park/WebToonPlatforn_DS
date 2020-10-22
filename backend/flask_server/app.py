@@ -26,8 +26,8 @@ mtcnn = MTCNN(image_size=512, margin=200)
 # minsoooooo - u got it , webtoonify(human image to webtoon image)
 import ugotit
 
-model_webtoonify_freedraw = ugotit.load_model("freedraw_model.pt")
-model_webtoonify_mind_sound = ugotit.load_model("mind_sound_model.pt")
+# model_webtoonify_freedraw = ugotit.load_model("freedraw_model.pt")
+# model_webtoonify_mind_sound = ugotit.load_model("mind_sound_model.pt")
 
 '''
 shin++ 15:05, 2020/10/21 head
