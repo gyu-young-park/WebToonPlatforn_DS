@@ -1,16 +1,27 @@
 import React from 'react'
 import './index.css'
 import { Doughnut} from 'react-chartjs-2'
-let DounetColor = ["red", "black", "blue", "#207ac7"]
+interface IAuthorAdminDounetProps{
+    data : dounetData
+}
+
+type dounetData = {
+    labels : string [],
+    datasets : dataset
+}
+type dataset = {
+    data : number[],
+    backgroundColor : string[]
+}
+
+let DounetColor = ["red", "blue"]
 const donutData = {
 	labels: [
-		'Data Group 1',
-		'Data Group 2',
-		'Data Group 3',
-		'Data Group 4'
+		'여자',
+		'남자'
 	],
 	datasets: [{
-        data: [100, 100, 100, 100],
+        data: [80, 100],
         backgroundColor: DounetColor
 	}]
 };

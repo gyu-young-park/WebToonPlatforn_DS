@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import './index.css'
 import {IWebtoonSpecificProps } from '../../data/interface/IWebtoonSpecificPageProps'
@@ -90,15 +90,30 @@ const data = [
     },
       
   ];
-const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
-const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"  
-const spbk = "0xd032819569de737f5ef01e0f11920a831308a340"
-const spk = "0x83d747fd5cb3f18ae1022265236ec8f3db195af55ae37644a24ea79769503ef2"
+// mock
+// const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
+// const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"  
+// const spbk = "0xd032819569de737f5ef01e0f11920a831308a340"
+// const spk = "0x83d747fd5cb3f18ae1022265236ec8f3db195af55ae37644a24ea79769503ef2"
 const titles = "banana"
 const amount = 3
 const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
     const index = props.match.params.id
     const title = props.match.params.name
+    const [publicKey, setPublicKey] = useState()
+    const [privateKey, setPrivateKey] = useState()
+    useEffect(()=>{
+        onAuthHandler().then((res) => {
+            console.log(res)
+            setPublicKey(res.publicKey)
+            setPrivateKey(res.privateKey)
+        })
+    },[])
+
+    const onAuthHandler = async () => {
+        return await axios("/api/users/auth").then(res=> {return res.data})
+    }
+    
     const onBuyWebtoonHandler = (event : any) => {
         // axios.post('/api/token/webtoon_buy',{user : {public_key : spbk, private_key : spk, title : titles ,amount : amount}}).then((res) => {
         //     console.log(res)
@@ -138,7 +153,8 @@ const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
                         avatar={<img className="webtoon-specific-page-right-list-item-avatar" src={item.image} />}
                         title={<a href={'#'} onClick={(event : React.MouseEvent<HTMLElement>) => {
                             if(window.confirm("구매하시겠습니까?")){
-                                axios.post('/api/token/webtoon_buy',{user : {public_key : spbk, private_key : spk, title : titles ,amount : amount}}).then((res) => {
+                                console.log(publicKey, privateKey)
+                                axios.post('/api/token/webtoon_buy',{user : {public_key : publicKey, private_key : privateKey, title : titles ,amount : amount}}).then((res) => {
                                     console.log(res)
                                     alert("구매가 완료되었습니다.")
                                     props.history.push(`/webtoonImagePage/${item.index}/${title}`)

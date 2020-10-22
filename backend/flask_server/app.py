@@ -23,9 +23,22 @@ from facenet_pytorch import MTCNN
 
 mtcnn = MTCNN(image_size=512, margin=200)
 
+# minsoooooo - u got it , webtoonify(human image to webtoon image)
+import ugotit
+
+model_webtoonify_freedraw = ugotit.load_model("freedraw_model.pt")
+model_webtoonify_mind_sound = ugotit.load_model("mind_sound_model.pt")
+
+'''
+shin++ 15:05, 2020/10/21 head
+'''
 import os
 import stegano_encoder
 import stegano_decoder
+'''
+shin++ 15:05, 2020/10/21 tail
+'''
+
 
 tokenizer = get_tokenizer()
 model_comment = comment_model.load_model()
@@ -43,10 +56,16 @@ def run_model():
     images = Image.open(BytesIO(base64.b64decode(image_data)))
 
     images_cropped = mtcnn(images)
-    # webtoonify = ugotit(images_cropped)
+    images_webtoon = None
+    
+    webtoon_title = re.sub('','',request.form['webtoon_title'])
+    if webtoon_title=="freedraw":
+        images_webtoon = model_webtoonify_freedraw(images_cropped)
+    elif webtoon_title=="mind_sound":
+        images_webtoon = model_webtoonify_mind_sound(images_cropped)
 
     images.save("file_image.png")
-    print(images, file=sys.stdout)
+    #print(images, file=sys.stdout)
     # image_file = Image.open(imageUrl)
     return image_data
 
@@ -87,9 +106,15 @@ def run_comment_classify():
     #return으로 json 결과를 주떼엽><
 
 
+
+
+'''
+shin++ 14:10, 2020/10/21 head
+'''
 @app.route('/gan/stegano_encode', methods=['POST'])
 @cross_origin()
 def run_stegano_encoder():
+
     image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
     # imageUrl = request.form.get("userImage")
     images = Image.open(BytesIO(base64.b64decode(image_data)))
@@ -98,11 +123,12 @@ def run_stegano_encoder():
     
     # steganoimg name => "stegano_of_input_"
     output_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
+
     # KEY value
     ############ request keys ############
     block_keys = request.form['userKey']
     ##########################################
-    
+
     # stegano encoding
     try:
         _stegano_encode("converted.png", "./data_/output_new.png", block_keys)
@@ -113,7 +139,7 @@ def run_stegano_encoder():
         return jsonify({"state" : False})
 
 
-@app.route('/gan/stegano_decode', methods=['POST'])
+@app.route('/gan/stegano/decode', methods=['POST'])
 @cross_origin()
 def run_stegano_decoder():
 
