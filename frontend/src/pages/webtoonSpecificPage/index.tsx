@@ -1,4 +1,5 @@
 import React from 'react'
+import {withRouter} from 'react-router-dom'
 import './index.css'
 import {IWebtoonSpecificProps } from '../../data/interface/IWebtoonSpecificPageProps'
 import banana from './img/banana.webp'
@@ -15,7 +16,7 @@ import banana4 from './img/banana/4.jpg'
 import banana5 from './img/banana/5.jpg'
 import banana6 from './img/banana/6.jpg'
 import banana7 from './img/banana/7.jpg'
-
+import axios from 'axios'
 const rankWebtoon : CardItem[] = [
     {
         metaTitle : "바나나툰",
@@ -89,10 +90,27 @@ const data = [
     },
       
   ];
+const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
+const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"  
+const spbk = "0xd032819569de737f5ef01e0f11920a831308a340"
+const spk = "0x83d747fd5cb3f18ae1022265236ec8f3db195af55ae37644a24ea79769503ef2"
+const titles = "banana"
+const amount = 2
 const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
     const index = props.match.params.id
     const title = props.match.params.name
-    
+    const onBuyWebtoonHandler = (event : any) => {
+        // axios.post('/api/token/regist_address',{user : {public_key : pbk, private_key : pk, title: titles}}).then((res) => {
+        //     console.log(res)
+        // })
+        // axios.post('/api/token/token_buy',{user : {public_key : pbk, private_key : pk,amount : 100}}).then((res) => {
+        //     console.log(res)
+        // })
+        
+        axios.post('/api/token/webtoon_buy',{user : {public_key : spbk, private_key : spk, title : titles ,amount : amount}}).then((res) => {
+            console.log(res)
+        })
+    }
     return (
         <div className="webtoon-specific-page-container">
             <div className="webtoon-specific-page-left-container">
@@ -122,7 +140,7 @@ const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
                     itemLayout="horizontal"
                     dataSource={data}
                     renderItem={item => (
-                    <List.Item className="webtoon-specific-page-right-list-item">
+                    <List.Item className="webtoon-specific-page-right-list-item" onClick={onBuyWebtoonHandler}>
                         <List.Item.Meta
                         avatar={<img className="webtoon-specific-page-right-list-item-avatar" src={item.image} />}
                         title={<a href={`/webtoonImagePage/${item.index}/${title}`}>{item.index+"화"}<br/>{item.title}</a>}
@@ -132,14 +150,14 @@ const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
                                 <div>3 KLAY</div>
                             </div>
                         }
+                        
                         />
                     </List.Item>
                     )}
                 />,
             </div>
         </div>
-
     )
 }
 
-export default WebtoonSpecificPage;
+export default withRouter(WebtoonSpecificPage);

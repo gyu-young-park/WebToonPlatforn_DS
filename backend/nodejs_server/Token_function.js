@@ -8,6 +8,7 @@ module.exports.balanceOf = async function(_address, _pk){
     try{
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
+        wallet.remove(_address)
         wallet.add(account)
         const res = await contract.methods.balanceOf(_address).call(null)
         wallet.remove(_address)
@@ -22,6 +23,7 @@ module.exports.buy_token = async function(_address, _pk, amount){
     try{
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
+        wallet.remove(_address)
         wallet.add(account)
         const result = await contract.methods.buy_token().send({from: _address, gas:300000,value:caver.utils.toHex(caver.utils.toPeb(amount.toString(),"peb"))})
         const res = await contract.methods.balanceOf(_address).call(null)
@@ -29,6 +31,7 @@ module.exports.buy_token = async function(_address, _pk, amount){
         return {"success":true,"balance":res}
     }catch(e){
       console.log(e);
+      wallet.remove(_address)
       return {"success":false}
     }
 }
@@ -36,6 +39,7 @@ module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구
     try{
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
+        wallet.remove(_address)
         wallet.add(account)
         const result = await contract.methods.buy_webtoon(title,amount).send({from: _address, gas:300000})
         const res = await contract.methods.balanceOf(_address).call(null)
@@ -43,6 +47,7 @@ module.exports.buy_webtoon = async function(_address, _pk, title, amount){// 구
         return {"success":true,"balance":res}
     }catch(e){
       console.log(e);
+      wallet.remove(_address)
       return {"success":false}
     }
 }
@@ -61,6 +66,7 @@ module.exports.regist_address = async function(_address, _pk, title){
     try{
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
+        wallet.remove(_address)
         wallet.add(account)
         const res = await contract.methods.regist_address(title).send({from: _address, gas:300000})
         //const res = await contract.methods.balanceOf(_address).call(null)
@@ -84,6 +90,7 @@ module.exports.mint = async function(){
 
         const wallet = caver.klay.accounts.wallet
         const account = caver.klay.accounts.createWithAccountKey(_address, _pk)
+        wallet.remove(_address)
         wallet.add(account)
 
         const result = await contract_wtt.methods.mint().send({from: _address,gas: 300000})
