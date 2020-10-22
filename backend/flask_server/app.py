@@ -21,13 +21,31 @@ model_comment = comment_model.load_model()
 # dhsimpson - face detector
 from facenet_pytorch import MTCNN
 
-mtcnn = MTCNN(image_size=512, margin=200)
+mtcnn = MTCNN(image_size=128, margin=50)
 
 # minsoooooo - u got it , webtoonify(human image to webtoon image)
 import ugotit
+from torchvision import transforms
+import os
+import numpy as np
+from ugotit import tensor2img,RGB2BGR,save_img
 
 model_webtoonify_freedraw = ugotit.load_model("freedraw_model.pt")
+# model_webtoonify_freedraw_male = ugotit.load_model("freedraw_model_male.pt")
+# model_webtoonify_freedraw_female = ugotit.load_model("freedraw_model_female.pt")
 model_webtoonify_mind_sound = ugotit.load_model("mind_sound_model.pt")
+
+ugotit_transform = transforms.Compose([
+            transforms.Resize((128, 128)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5))
+        ])
+
+tensor2PIL = transforms.ToPILImage('RGB')
+
+
+    # images_webtoon = images_webtoon[0].squeeze()#.detach().cpu().numpy().transpose(1,2,0)
+    # images_webtoon = tensor2img(images_webtoon)
 
 '''
 shin++ 15:05, 2020/10/21 head
@@ -51,20 +69,37 @@ def index():
 @app.route('/gan/ugotit', methods=['POST'])
 @cross_origin()
 def run_model():
+    # 유저에게 이미지 받아옴
     image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
-    # imageUrl = request.form.get("userImage")
-    images = Image.open(BytesIO(base64.b64decode(image_data)))
-
-    images_cropped = mtcnn(images)
-    images_webtoon = None
-    
     webtoon_title = re.sub('','',request.form['webtoon_title'])
-    if webtoon_title=="freedraw":
-        images_webtoon = model_webtoonify_freedraw(images_cropped)
-    elif webtoon_title=="mind_sound":
-        images_webtoon = model_webtoonify_mind_sound(images_cropped)
+    # 이미지에서 얼굴만 Crop
+    images = Image.open(BytesIO(base64.b64decode(image_data)))
+    images_cropped = mtcnn(images)
+    images_transformed = tensor2PIL(images_cropped)
+    images_transformed = ugotit_transform(images_transformed)
 
-    images.save("file_image.png")
+    # Ugotit에 넣기 위해 이미지를 Transform
+    # images_webtoon = None
+    images_transformed = images_transformed.unsqueeze(0)
+    #images_webtoon = model_webtoonify_freedraw(images_transformed)
+    
+    # model_webtoonify_freedraw_male
+    # model_webtoonify_freedraw_female
+
+    if webtoon_title=="freedraw":
+        images_webtoon = model_webtoonify_freedraw(images_transformed)
+    elif webtoon_title=="mind_sound":
+        images_webtoon = model_webtoonify_mind_sound(images_transformed)
+
+    # convert 
+    images_webtoon = tensor2img(images_webtoon)
+    images_webtoon = RGB2BGR(images_webtoon)
+    save_img(images_webtoon,"file_image.png")
+    # images_webtoon = torch.from_numpy(images_webtoon)
+    # images_webtoon = np.ndarray(images_webtoon)
+    # images_webtoon.save(os.path.join("file_image.png"))
+
+    #images_webtoon.save("file_image.png")
     #print(images, file=sys.stdout)
     # image_file = Image.open(imageUrl)
     return image_data
