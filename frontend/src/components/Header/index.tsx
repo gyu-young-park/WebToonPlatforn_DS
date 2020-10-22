@@ -31,8 +31,14 @@ const Header = () => {
         event.preventDefault()
         if(window.confirm("100 토큰을 충전하시겠습니까?")){
             const res = await axios.post('/api/token/token_buy',{user : {public_key : publicKey, private_key : privateKey  ,amount : 100}})
-            if(res.data.success){
-                alert("100토큰 충전에 성공하였습니다!")
+            if(res.data.success){   
+                console.log(res)
+                alert(`100토큰 충전에 성공하였습니다!.\n
+                트랜잭션: ${res.data.receipt.transactionHash} \n
+                                    from: ${res.data.receipt.from} \n
+                                    to: ${res.data.receipt.to}\n
+                                    잔여 토큰: ${res.data.balance}개 \n
+                                    `)
             }
         }
     }

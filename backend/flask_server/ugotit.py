@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.nn.parameter import Parameter
+import cv2
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -217,3 +218,12 @@ def load_model(path):
   model.load_state_dict(torch.load(path,map_location=device)['genA2B'])
   return model.to(device)
   
+def tensor2img(img):
+    img = img[0].squeeze().detach().cpu().permute(1,2,0).numpy()
+    return (img * 0.5 + 0.5)*255.0
+
+def RGB2BGR(img):
+    return cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+
+def save_img(img, path):
+    cv2.imwrite(path,img)
