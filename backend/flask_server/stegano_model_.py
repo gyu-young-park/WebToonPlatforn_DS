@@ -14,6 +14,9 @@ from tqdm import tqdm
 
 from utils import bits_to_bytearray, bytearray_to_text, ssim, text_to_bits
 
+import warnings
+warnings.filterwarnings("ignore")
+
 DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
     'train')
@@ -73,6 +76,7 @@ class SteganoGAN(object):
     def __init__(self, data_depth, encoder, decoder, critic,
                  cuda=False, verbose=False, log_dir=None, **kwargs):
 
+        print("instanciated!!")
         self.verbose = verbose
 
         self.data_depth = data_depth
@@ -347,23 +351,30 @@ class SteganoGAN(object):
         if self.verbose:
             print('Encoding completed.')
 
-    def decode(self, image):
+    def _decode(self, image):
+        print("decode start")
 
         if not os.path.exists(image):
             raise ValueError('Unable to read %s.' % image)
 
         # extract a bit vector
         image = imread(image, pilmode='RGB') / 255.0
+        print("decode position 1")
         image = torch.FloatTensor(image).permute(2, 1, 0).unsqueeze(0)
+        print("decode position 2")
         image = image.to(self.device)
-
+        print("decode position 3")
         image = self.decoder(image).view(-1) > 0
+        print("decode position 4")
 
         # split and decode messages
         candidates = Counter()
         bits = image.data.cpu().numpy().tolist()
+        print("decode 1")
         for candidate in bits_to_bytearray(bits).split(b'\x00\x00\x00\x00'):
+            print("decode 2")
             candidate = bytearray_to_text(bytearray(candidate))
+            print("decode 3")
             if candidate:
                 candidates[candidate] += 1
 
@@ -409,14 +420,14 @@ class SteganoGAN(object):
         steganogan.verbose = verbose
         # print("load 8")
 
-        # steganogan.encoder.upgrade_legacy()
+        steganogan.encoder.upgrade_legacy()
         # print("load 9")
-        # steganogan.decoder.upgrade_legacy()
+        steganogan.decoder.upgrade_legacy()
         # print("load 10")
-        # #steganogan.critic.upgrade_legacy()
+        #steganogan.critic.upgrade_legacy()
         # print("load 11")
 
-        # steganogan.set_device(cuda)
+        #steganogan.set_device(cuda)
         # print("load 12")
         return steganogan
 

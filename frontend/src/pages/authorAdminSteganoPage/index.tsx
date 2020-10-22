@@ -53,11 +53,11 @@ const AuthorAdminSteganoPage = () => {
                     if(mode === "encoder"){
                         if(publicKey === undefined) return;
                         formData.append("userKey", publicKey)
-                        const res = await axios.post(url+'/gan/stegano_encode', formData, config)
+                        const res = await axios.post(url+'/gan/stegano/encode', formData, config)
                         console.log(res)
                     }
                     else if(mode === "decoder"){
-                        const res = await axios.post(url+'/gan/stegano_decode', formData, config)
+                        const res = await axios.post(url+'/gan/stegano/decode', formData, config)
                         const data = await res.data
                         console.log(data)
                         setSecreKey(data.text)

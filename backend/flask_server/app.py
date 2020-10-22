@@ -26,15 +26,14 @@ mtcnn = MTCNN(image_size=512, margin=200)
 # minsoooooo - u got it , webtoonify(human image to webtoon image)
 import ugotit
 
-model_webtoonify_freedraw = ugotit.load_model("freedraw_model.pt")
-model_webtoonify_mind_sound = ugotit.load_model("mind_sound_model.pt")
+# model_webtoonify_freedraw = ugotit.load_model("freedraw_model.pt")
+# model_webtoonify_mind_sound = ugotit.load_model("mind_sound_model.pt")
 
 '''
 shin++ 15:05, 2020/10/21 head
 '''
 import os
-import stegano_encoder
-import stegano_decoder
+
 '''
 shin++ 15:05, 2020/10/21 tail
 '''
@@ -111,7 +110,7 @@ def run_comment_classify():
 '''
 shin++ 14:10, 2020/10/21 head
 '''
-@app.route('/gan/stegano_encode', methods=['POST'])
+@app.route('/gan/stegano/encode', methods=['POST'])
 @cross_origin()
 def run_stegano_encoder():
 
@@ -121,8 +120,6 @@ def run_stegano_encoder():
     converted = images.resize((256,256), Image.LANCZOS)
     converted.save("converted.png", format='png')
     
-    # steganoimg name => "stegano_of_input_"
-    output_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
 
     # KEY value
     ############ request keys ############
@@ -143,34 +140,33 @@ def run_stegano_encoder():
 @cross_origin()
 def run_stegano_decoder():
 
+    # image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
+    # # imageUrl = request.form.get("userImage")
+    # images = Image.open(BytesIO(base64.b64decode(image_data)))
+    # #converted = images.resize((256,256), Image.LANCZOS)
+    # images.save("./output_new.png", format='png')
+    
+
     # steganoimg name => "stegano_of_input_"
     #stegano_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
 
     try:
-        decoded_msg = _stegano_decode("./data_/output_new.png")
+        decoded_msg = _stegano_decode("converted.png")
         return jsonify({"state" : True, "text" : decoded_msg})
     except Exception as e:
         print(e)
         return jsonify({"state" : False})
 
-
+def _stegano_decode(stegano_img, steg = "dense"):
+    from stegano_model_ import SteganoGAN
+    steganogan = SteganoGAN.load(steg, cuda=False)
+    decoded_msg = steganogan._decode(stegano_img)
+    return decoded_msg
 
 def _stegano_encode(cover_img, output_stegano_img, msg, steg = "dense"):
-	from stegano_model_ import SteganoGAN
-	
-	steganogan = SteganoGAN.load(steg, cuda=False)
-	steganogan.encode(cover_img, output_stegano_img, msg)
-
-
-def _stegano_decode(stegano_img, steg="dense"):
-
     from stegano_model_ import SteganoGAN
-    from decoders import DenseDecoder
-
     steganogan = SteganoGAN.load(steg, cuda=False)
-    # Decode the message from stegano_img
-    decoded_msg = steganogan.decode(stegano_img)
-    return decoded_msg
+    steganogan.encode(cover_img, output_stegano_img, msg)
 
 
 
