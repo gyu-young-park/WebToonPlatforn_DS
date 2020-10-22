@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import {withRouter} from 'react-router-dom'
 import './index.css'
 import {IWebtoonSpecificProps } from '../../data/interface/IWebtoonSpecificPageProps'
@@ -99,6 +99,17 @@ const amount = 2
 const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
     const index = props.match.params.id
     const title = props.match.params.name
+    const [publicKey, setPublicKey] = useState("")
+    const [privateKey, setPrivateKey] = useState("")
+    
+    useEffect(()=>{
+
+    })
+
+    const getAuth = async () => {
+        
+    }
+    
     const onBuyWebtoonHandler = (event : any) => {
         // axios.post('/api/token/webtoon_buy',{user : {public_key : spbk, private_key : spk, title : titles ,amount : amount}}).then((res) => {
         //     console.log(res)
