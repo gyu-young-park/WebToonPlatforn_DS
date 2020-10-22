@@ -17,12 +17,12 @@ const options = {
     maintainAspectRatio: false // false로 설정 시 사용자 정의 크기에 따라 그래프 크기가 결정됨.
 }
 const AuthorAdminBarChart = () => {
-    let calculatedArr = [1,2,3,4,5,6,7,8]
+    let calculatedArr = [8,9,7,6,5,4,3,1]
 
     let rankColor = ["#11b288", "#207ac7", "#207ac7", "#207ac7", "#d6d6d6", "#d6d6d6", "#d6d6d6", "#d6d6d6"]
 
     const data = {
-        labels: ['#1', '#2', '#3', '#4', '#5', '#6', '#7' , '#8'],
+        labels: ['10대', '20대', '20대 중반', '30대', '30대 중반', '40대', '50대' , '60+'],
         datasets: [
           {
             backgroundColor: rankColor,
