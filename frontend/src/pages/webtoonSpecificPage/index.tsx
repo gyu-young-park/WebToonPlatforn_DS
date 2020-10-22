@@ -153,10 +153,14 @@ const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
                         avatar={<img className="webtoon-specific-page-right-list-item-avatar" src={item.image} />}
                         title={<a href={'#'} onClick={(event : React.MouseEvent<HTMLElement>) => {
                             if(window.confirm("구매하시겠습니까?")){
-                                console.log(publicKey, privateKey)
                                 axios.post('/api/token/webtoon_buy',{user : {public_key : publicKey, private_key : privateKey, title : titles ,amount : amount}}).then((res) => {
                                     console.log(res)
-                                    alert("구매가 완료되었습니다.")
+                                    alert(`구매가 완료되었습니다.\n트랜잭션: ${res.data.receipt.transactionHash} \n
+                                    from: ${res.data.receipt.from} \n
+                                    to: ${res.data.receipt.to}\n
+                                    잔여 토큰: ${res.data.balance}개 \n
+                                    `)
+
                                     props.history.push(`/webtoonImagePage/${item.index}/${title}`)
                                 })
                             }

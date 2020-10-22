@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './index.css'
 import { Upload, message, Button } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
@@ -14,6 +14,17 @@ const AuthorAdminSteganoPage = () => {
     const [mode, setMode] = useState("encoder")
     const [filePath, setfilePath] = useState("")
     const [secretKey, setSecreKey] = useState("text")
+    const [publicKey, setPublicKey] = useState<string | Blob>()
+    const [privateKey, setPrivateKey] = useState<string | Blob>()
+    useEffect(()=>{
+        onAuthHandler().then((res) =>{
+            setPublicKey(res.publicKey)
+            setPrivateKey(res.privateKey)
+        })
+    },[])
+    const onAuthHandler = async () => {
+        return await axios("/api/users/auth").then(res=> {return res.data})
+    }
     const onEncodeMode = () =>{
         setMode("encoder")
     }
@@ -39,9 +50,19 @@ const AuthorAdminSteganoPage = () => {
                 console.log(base64data)
                 if(base64data != null){
                     formData.append("userImage", base64data)
-                    formData.append("userKey", "keys")
-                    const res = await axios.post(url+'/gan/stegano_encode', formData, config)
-                    console.log(res)
+                    if(mode === "encoder"){
+                        if(publicKey === undefined) return;
+                        formData.append("userKey", publicKey)
+                        const res = await axios.post(url+'/gan/stegano_encode', formData, config)
+                        console.log(res)
+                    }
+                    else if(mode === "decoder"){
+                        const res = await axios.post(url+'/gan/stegano_decode', formData, config)
+                        const data = await res.data
+                        console.log(data)
+                        setSecreKey(data.text)
+                    }
+
                 }
             }
             reader.readAsDataURL(info.file.originFileObj)
@@ -64,8 +85,7 @@ const AuthorAdminSteganoPage = () => {
                         </p>
                         <p className="ant-upload-text">Click or drag file to this area to upload</p>
                         <p className="ant-upload-hint">
-                        Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-                        band files
+                        {`Your Public key(${publicKey}) will hide in image `}
                         </p>
                     </Dragger>
                 </div>

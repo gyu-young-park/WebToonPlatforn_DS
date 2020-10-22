@@ -159,14 +159,12 @@ output :
 */
 // 토큰 구매 후 성공하면 잔고를 알려줌
 app.post('/api/token/token_buy', async (req,res)=>{
-
-
     const res_token = await token_functions.buy_token(req.body.user.public_key,req.body.user.private_key,req.body.user.amount)//req.user.public_key,req.user.private_key,req.amount
-    
     if(!res_token.success)return res.json({success:false})
     return res.status(200).json({
         success: true,
-        balance: res_token.balance
+        balance: res_token.balance,
+        receipt : res_token.receipt
     })
 })
 
@@ -196,7 +194,8 @@ app.post('/api/token/webtoon_buy', async (req,res)=>{
     if(!res_token.success) return res.json({success:false})
     return res.status(200).json({
         success: true,
-        balance: res_token.balance
+        balance: res_token.balance,
+        receipt : res_token.receipt
     })
 })
 

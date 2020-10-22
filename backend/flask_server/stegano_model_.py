@@ -12,7 +12,7 @@ from torch.nn.functional import binary_cross_entropy_with_logits, mse_loss
 from torch.optim import Adam
 from tqdm import tqdm
 
-from steganogan.utils import bits_to_bytearray, bytearray_to_text, ssim, text_to_bits
+from utils import bits_to_bytearray, bytearray_to_text, ssim, text_to_bits
 
 DEFAULT_PATH = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -316,22 +316,33 @@ class SteganoGAN(object):
         Args:
             cover (str): Path to the image to be used as cover.
             output (str): Path where the generated image will be saved.
+           
             text (str): Message to hide inside the image.
         """
-        #cover = imread(cover, pilmode='RGB') / 127.5 - 1.0
-        cover = cover / 127.5 -1.0
+        print("encoder start")
+        cover = imread(cover, pilmode='RGB') / 127.5 - 1.0
+        print("encoder 1")
+        #cover = cover / 127.5 -1.0
         cover = torch.FloatTensor(cover).permute(2, 1, 0).unsqueeze(0)
+        print("encoder 2")
 
         cover_size = cover.size()
+        print("encoder 3")
         # _, _, height, width = cover.size()
         payload = self._make_payload(cover_size[3], cover_size[2], self.data_depth, text)
+        print("encoder 4")
 
         cover = cover.to(self.device)
+        print("encoder 5")
         payload = payload.to(self.device)
+        print("encoder 6")
         generated = self.encoder(cover, payload)[0].clamp(-1.0, 1.0)
+        print("encoder 7")
 
         generated = (generated.permute(2, 1, 0).detach().cpu().numpy() + 1.0) * 127.5
+        print("encoder 8")
         imwrite(output, generated.astype('uint8'))
+        print("encoder 9")
 
         if self.verbose:
             print('Encoding completed.')
@@ -378,22 +389,34 @@ class SteganoGAN(object):
             cuda(bool): Force loaded model to use cuda (if available).
             verbose(bool): Force loaded model to use or not verbose.
         """
-
+        print("load start")
         if architecture and not path:
+            print("load 1")
             model_name = '{}.steg'.format(architecture)
+            print("load 2")
             pretrained_path = os.path.join(os.path.dirname(__file__), 'pretrained')
+            print("load 3")
             path = os.path.join(pretrained_path, model_name)
+            print("load 4")
 
         elif (architecture is None and path is None) or (architecture and path):
+            print("load 5")
             raise ValueError(
                 'Please provide either an architecture or a path to pretrained model.')
-
+        # print("load 6")
         steganogan = torch.load(path, map_location='cpu')
+        # print("load 7")
         steganogan.verbose = verbose
+        # print("load 8")
 
-        steganogan.encoder.upgrade_legacy()
-        steganogan.decoder.upgrade_legacy()
-        steganogan.critic.upgrade_legacy()
+        # steganogan.encoder.upgrade_legacy()
+        # print("load 9")
+        # steganogan.decoder.upgrade_legacy()
+        # print("load 10")
+        # #steganogan.critic.upgrade_legacy()
+        # print("load 11")
 
-        steganogan.set_device(cuda)
+        # steganogan.set_device(cuda)
+        # print("load 12")
         return steganogan
+

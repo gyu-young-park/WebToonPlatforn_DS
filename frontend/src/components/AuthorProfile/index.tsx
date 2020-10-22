@@ -53,7 +53,7 @@ const AuthorProfile : React.FC<IAuthorProfileProps> = (props : IAuthorProfilePro
                 <h2 className="author-profile-title">information</h2>
                 <Descriptions
                     bordered
-                    column={{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 2, xs: 1 }}
+                    column={{ xxl: 4, xl: 3, lg: 3, md: 2, sm: 2, xs: 1 }}
                 >
                     <Descriptions.Item label="이름">{props.name}</Descriptions.Item>
                     <Descriptions.Item label="연재 작품 수">1</Descriptions.Item>
@@ -70,6 +70,7 @@ const AuthorProfile : React.FC<IAuthorProfileProps> = (props : IAuthorProfilePro
                     감사합니다~
                     </Descriptions.Item>
                 </Descriptions>
+                {`public-key : ${publicKey}`}
             </div>
             <div className="author-profile-statics">
                 <h2 className="author-profile-title">통계</h2>

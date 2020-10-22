@@ -30,6 +30,7 @@ import os
 import numpy as np
 from ugotit import tensor2img,RGB2BGR,save_img
 
+
 model_webtoonify_freedraw = ugotit.load_model("freedraw_model.pt")
 # model_webtoonify_freedraw_male = ugotit.load_model("freedraw_model_male.pt")
 # model_webtoonify_freedraw_female = ugotit.load_model("freedraw_model_female.pt")
@@ -71,7 +72,7 @@ def index():
 def run_model():
     # 유저에게 이미지 받아옴
     image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
-    webtoon_title = re.sub('','',request.form['webtoon_title'])
+    webtoon_title = request.form['webtoon_title']
     # 이미지에서 얼굴만 Crop
     images = Image.open(BytesIO(base64.b64decode(image_data)))
     images_cropped = mtcnn(images)
@@ -153,21 +154,25 @@ def run_stegano_encoder():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
     # imageUrl = request.form.get("userImage")
     images = Image.open(BytesIO(base64.b64decode(image_data)))
-
+    converted = images.resize((256,256), Image.LANCZOS)
+    converted.save("converted.png", format='png')
+    
     # steganoimg name => "stegano_of_input_"
     output_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
 
     # KEY value
     ############ request keys ############
-    block_keys = ""
+    block_keys = request.form['userKey']
     ##########################################
 
     # stegano encoding
     try:
-        stegano_encoder.stegano_encode(images, output_img_path, block_keys)
-        return 1
-    except:
-        return 0
+        _stegano_encode("converted.png", "./data_/output_new.png", block_keys)
+
+        return jsonify({"state" : True})
+    except Exception as e:
+        print(e)
+        return jsonify({"state" : False})
 
 
 @app.route('/gan/stegano/decode', methods=['POST'])
@@ -175,17 +180,33 @@ def run_stegano_encoder():
 def run_stegano_decoder():
 
     # steganoimg name => "stegano_of_input_"
-    stegano_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
+    #stegano_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
 
-    decoded_msg = stegano_decoder._stegano_decode(stegano_img_path)
+    try:
+        decoded_msg = _stegano_decode("./data_/output_new.png")
+        return jsonify({"state" : True, "text" : decoded_msg})
+    except Exception as e:
+        print(e)
+        return jsonify({"state" : False})
 
+
+
+def _stegano_encode(cover_img, output_stegano_img, msg, steg = "dense"):
+	from stegano_model_ import SteganoGAN
+	
+	steganogan = SteganoGAN.load(steg, cuda=False)
+	steganogan.encode(cover_img, output_stegano_img, msg)
+
+
+def _stegano_decode(stegano_img, steg="dense"):
+
+    from stegano_model_ import SteganoGAN
+    from decoders import DenseDecoder
+
+    steganogan = SteganoGAN.load(steg, cuda=False)
+    # Decode the message from stegano_img
+    decoded_msg = steganogan.decode(stegano_img)
     return decoded_msg
-
-'''
-shin++ 14:10, 2020/10/21 tail
-'''
-
-
 
 
 
