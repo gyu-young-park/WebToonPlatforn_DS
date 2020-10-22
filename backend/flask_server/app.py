@@ -23,12 +23,9 @@ from facenet_pytorch import MTCNN
 
 mtcnn = MTCNN(image_size=512, margin=200)
 
-
-
 import os
 import stegano_encoder
 import stegano_decoder
-
 
 tokenizer = get_tokenizer()
 model_comment = comment_model.load_model()
@@ -105,7 +102,7 @@ def run_stegano_encoder():
     
     # stegano encoding
     try:
-        stegano_encoder.stegano_encode(images, "./", block_keys)
+        stegano_encoder._stegano_encode(images, "./", block_keys)
         return jsonify({"state" : True})
     except Exception as e:
         return jsonify({"state" : False})

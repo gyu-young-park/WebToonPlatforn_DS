@@ -1,5 +1,6 @@
 import * as React from 'react';
 import axios from 'axios'
+import {Alert} from "antd"
 import './index.css';
 const spbk = "0xd032819569de737f5ef01e0f11920a831308a340"
 const spk = "0x83d747fd5cb3f18ae1022265236ec8f3db195af55ae37644a24ea79769503ef2"
@@ -15,9 +16,12 @@ const Header = () => {
     }
     const onBuyTokenHandler = (event : React.MouseEvent<HTMLElement>) => {
         event.preventDefault()
-        axios.post('/api/token/token_buy',{user : {public_key : spbk, private_key : spk,amount : 100}}).then((res) => {
-            console.log(res)
-        })
+        if(window.confirm("100 토큰을 충전하시겠습니까?")){
+            axios.post('/api/token/token_buy',{user : {public_key : spbk, private_key : spk,amount : 100}}).then((res) => {
+                console.log(res)
+                alert("100개 토큰 충전에 성공하였습니다!")
+            })
+        }
     }
     return(
         <header>
@@ -33,7 +37,7 @@ const Header = () => {
                 <nav className="nav-right">
                     <ul>
                         <li ><a href="#" onClick={onLogoutHandler}><i className="fa fa-hourglass-start" aria-hidden="true"></i>로그아웃</a></li>
-                        <li ><a href="#" onClick={onBuyTokenHandler}><i className="fa fa-hourglass-start" aria-hidden="true"></i>토큰 충전</a></li>
+                        <li ><a href="#" onClick={onBuyTokenHandler}><i className="fa fa-shopping-cart" aria-hidden="true"></i>토큰 충전</a></li>
                         <li ><a href="/webtoon/author/admin/baba@naver.com/banana"><i className="fa fa-hourglass-start" aria-hidden="true"></i>내 정보</a></li>
                     </ul>
                 </nav>

@@ -100,16 +100,9 @@ const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
     const index = props.match.params.id
     const title = props.match.params.name
     const onBuyWebtoonHandler = (event : any) => {
-        // axios.post('/api/token/regist_address',{user : {public_key : pbk, private_key : pk, title: titles}}).then((res) => {
+        // axios.post('/api/token/webtoon_buy',{user : {public_key : spbk, private_key : spk, title : titles ,amount : amount}}).then((res) => {
         //     console.log(res)
         // })
-        // axios.post('/api/token/token_buy',{user : {public_key : pbk, private_key : pk,amount : 100}}).then((res) => {
-        //     console.log(res)
-        // })
-        
-        axios.post('/api/token/webtoon_buy',{user : {public_key : spbk, private_key : spk, title : titles ,amount : amount}}).then((res) => {
-            console.log(res)
-        })
     }
     return (
         <div className="webtoon-specific-page-container">
@@ -143,7 +136,15 @@ const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
                     <List.Item className="webtoon-specific-page-right-list-item" onClick={onBuyWebtoonHandler}>
                         <List.Item.Meta
                         avatar={<img className="webtoon-specific-page-right-list-item-avatar" src={item.image} />}
-                        title={<a href={`/webtoonImagePage/${item.index}/${title}`}>{item.index+"화"}<br/>{item.title}</a>}
+                        title={<a href={'#'} onClick={(event : React.MouseEvent<HTMLElement>) => {
+                            if(window.confirm("구매하시겠습니까?")){
+                                axios.post('/api/token/webtoon_buy',{user : {public_key : spbk, private_key : spk, title : titles ,amount : amount}}).then((res) => {
+                                    console.log(res)
+                                    alert("구매가 완료되었습니다.")
+                                    props.history.push(`/webtoonImagePage/${item.index}/${title}`)
+                                })
+                            }
+                        }}>{item.index+"화"}<br/>{item.title}</a>}
                         description={
                             <div className="webtoon-specific-page-right-list-item-desc">
                                 <div>{item.date}</div>

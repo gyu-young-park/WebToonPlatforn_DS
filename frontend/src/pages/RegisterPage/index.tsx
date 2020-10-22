@@ -73,7 +73,7 @@ const RegisterPage  = () => {
                         <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="password" onChange={onPasswordHandler}/>
                     </Form.Item>
                     <Form.Item name="userPasswordConfirm" rules={[{required: true,message: 'Please input your Password Confirm!',},]}>
-                        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password"placeholder="Password" onChange={onConfirmPasswordHandler}/>
+                        <Input  prefix={<LockOutlined className="site-form-item-icon" />} type="password"placeholder="Password" onChange={onConfirmPasswordHandler}/>
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">Register</Button>
