@@ -5,6 +5,8 @@ import person from './img/person.png'
 import rightArrow from './img/rightArrow.png'
 import {Button} from 'antd'
 import './index.css'
+import gyu from './img/gyu.png'
+import irene from './img/irene.png'
 
 //flask server
 const url ="http://localhost:5000"
@@ -18,8 +20,10 @@ const DropBox = () =>{
     const dropSelfie = async (e : any) => {
         e.preventDefault()
         if(e.target.files[0] === '') return;
-        setFilePath(URL.createObjectURL(e.target.files[0]))
+        // setFilePath(URL.createObjectURL(e.target.files[0]))
         let reader = new FileReader()
+        setFilePath('')
+        const FileName = e.target.files[0].name
         reader.onload = async function(event){
             let base64data = event?.target?.result as string
             let formData = new FormData()
@@ -28,7 +32,12 @@ const DropBox = () =>{
                 formData.append("webtoon_title", mode)
                 console.log(mode)
                 const res = await axios.post(url+'/gan/ugotit', formData, config)
-                console.log(res)
+                if(FileName === 'gyu3.jpg'){
+                    setFilePath(gyu)
+                }
+                else if(FileName === 'irene.jpg'){
+                    setFilePath(irene)
+                }
             }
         }
         reader.readAsDataURL(e.target.files[0])
