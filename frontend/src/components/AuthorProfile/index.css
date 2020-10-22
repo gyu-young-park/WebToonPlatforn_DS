@@ -46,7 +46,7 @@
 
 .author-desc-container{
     width: 50%;
-    font-size:30px;
+    font-size:20px;
     font-weight: 800;
     font-family: 'Gamja Flower', cursive;
     padding-top:30px;
@@ -54,7 +54,6 @@
     background: #ececec;
     padding-left:10px;
     padding-bottom: 10px;
-    
 }
 
 .author-profile-statics{
