@@ -95,7 +95,7 @@ const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
 const spbk = "0xd032819569de737f5ef01e0f11920a831308a340"
 const spk = "0x83d747fd5cb3f18ae1022265236ec8f3db195af55ae37644a24ea79769503ef2"
 const titles = "banana"
-const amount = 2
+const amount = 3
 const WebtoonSpecificPage = (props : IWebtoonSpecificProps) => {
     const index = props.match.params.id
     const title = props.match.params.name

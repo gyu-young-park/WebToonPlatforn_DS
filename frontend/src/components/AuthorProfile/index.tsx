@@ -9,24 +9,27 @@ import axios from 'axios'
 const AuthorProfile : React.FC<IAuthorProfileProps> = (props : IAuthorProfileProps) => {
     const [tokenCount, setTokenCount] = useState()
     const isCancelled = React.useRef(false);
+    const [publicKey, setPublicKey] = useState()
+    const [privateKey, setPrivateKey] = useState()
     const [flag, setFlag] = useState<boolean>(false)
-    const pbk = "0xa7f9507b9a4589c010b374f262db444bba5af6d0"
-    const pk = "0xe0e0ea44fb2bff6cbf4e82795fb8bfa4cd6b1fa842a4445d897fdecfad0164dc"
-    
-    const spbk = "0xd032819569de737f5ef01e0f11920a831308a340"
-    const spk = "0x83d747fd5cb3f18ae1022265236ec8f3db195af55ae37644a24ea79769503ef2"
-    useEffect(()=>{
-        console.log(tokenCount)
-    },[tokenCount])
     useEffect(()=>{
         retriveToken()
+    },[privateKey])
+    useEffect(()=>{
+        onAuthHandler().then((res) =>{
+            setPublicKey(res.publicKey)
+            setPrivateKey(res.privateKey)
+        })
         return () => {
             isCancelled.current = true;
           };
-      
     },[])
+    const onAuthHandler = async () => {
+        return await axios("/api/users/auth").then(res=> {return res.data})
+    }
     const retriveToken = async () => {
-        const res = await axios.post('/api/token/token_amount',  {user : {public_key : pbk , private_key : pk}}  )
+        console.log(publicKey, privateKey)
+        const res = await axios.post('/api/token/token_amount',  {user : {public_key : publicKey , private_key : privateKey}}  )
         if(res.data.balance == undefined || res.data.balance == null) return;
         const data = await res.data
         console.log(res)

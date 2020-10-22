@@ -3,13 +3,15 @@ import './index.css'
 import {useDispatch} from 'react-redux'
 import {registerUser} from '../../_actions/user_action'
 import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, KeyOutlined } from '@ant-design/icons';
 const RegisterPage  = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
     const [userName, setName] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
+    const [publicKey, setPublicKey] = useState("")
+    const [privateKey, setPrivateKey] = useState("")
 
     const onEmailHandler = (e : React.FormEvent<HTMLInputElement>) => {
         e.preventDefault()
@@ -31,6 +33,16 @@ const RegisterPage  = () => {
         setConfirmPassword(e.currentTarget.value)
     }
 
+    const onPublicKeyHandler = (e : React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        setPublicKey(e.currentTarget.value)
+    }
+
+    const onPrivateKeyHandler = (e : React.FormEvent<HTMLInputElement>) => {
+        e.preventDefault()
+        setPrivateKey(e.currentTarget.value)
+    }
+
 
     const onRegisterSubmitHandler = async (e : React.FormEvent<HTMLFormElement>) => {
         //누를 때마다 페이지 리프레시가 된다.
@@ -42,6 +54,8 @@ const RegisterPage  = () => {
             email : email,
             password : password,
             name : userName,
+            publicKey: publicKey,
+            privateKey :privateKey
         }
         //loginUser action을 사용
         //return값으로 redux값이 온다.
@@ -73,7 +87,13 @@ const RegisterPage  = () => {
                         <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="password" onChange={onPasswordHandler}/>
                     </Form.Item>
                     <Form.Item name="userPasswordConfirm" rules={[{required: true,message: 'Please input your Password Confirm!',},]}>
-                        <Input  prefix={<LockOutlined className="site-form-item-icon" />} type="password"placeholder="Password" onChange={onConfirmPasswordHandler}/>
+                        <Input  prefix={<LockOutlined className="site-form-item-icon" />} type="password"placeholder="Confirm Password" onChange={onConfirmPasswordHandler}/>
+                    </Form.Item>
+                    <Form.Item name="userPublicKey" rules={[{required: true,message: 'Please input your Public key!',},]}>
+                        <Input  prefix={<KeyOutlined className="site-form-item-icon" />} type="password"placeholder="Public Key" onChange={onPublicKeyHandler}/>
+                    </Form.Item>
+                    <Form.Item name="userPrivateKey" rules={[{required: true,message: 'Please input your Private Key!',},]}>
+                        <Input  prefix={<KeyOutlined className="site-form-item-icon" />} type="password"placeholder="Private Key" onChange={onPrivateKeyHandler}/>
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">Register</Button>
