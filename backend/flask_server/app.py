@@ -93,6 +93,9 @@ def run_stegano_encoder():
     image_data = re.sub('^data:image/.+;base64,', '', request.form['userImage'])
     # imageUrl = request.form.get("userImage")
     images = Image.open(BytesIO(base64.b64decode(image_data)))
+    converted = images.resize((256,256), Image.LANCZOS)
+    converted.save("converted.png", format='png')
+    
     # steganoimg name => "stegano_of_input_"
     output_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
     # KEY value
@@ -102,9 +105,11 @@ def run_stegano_encoder():
     
     # stegano encoding
     try:
-        stegano_encoder._stegano_encode(images, "./", block_keys)
+        _stegano_encode("converted.png", "./data_/output_new.png", block_keys)
+
         return jsonify({"state" : True})
     except Exception as e:
+        print(e)
         return jsonify({"state" : False})
 
 
@@ -113,11 +118,35 @@ def run_stegano_encoder():
 def run_stegano_decoder():
 
     # steganoimg name => "stegano_of_input_"
-    stegano_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
+    #stegano_img_path = "/WebToonPlatforn_DS/frontend/public/stegano_of_" + "input_"
 
-    decoded_msg = stegano_decoder._stegano_decode(stegano_img_path)
+    try:
+        decoded_msg = _stegano_decode("./data_/output_new.png")
+        return jsonify({"state" : True, "text" : decoded_msg})
+    except Exception as e:
+        print(e)
+        return jsonify({"state" : False})
 
+
+
+def _stegano_encode(cover_img, output_stegano_img, msg, steg = "dense"):
+	from stegano_model_ import SteganoGAN
+	
+	steganogan = SteganoGAN.load(steg, cuda=False)
+	steganogan.encode(cover_img, output_stegano_img, msg)
+
+
+def _stegano_decode(stegano_img, steg="dense"):
+
+    from stegano_model_ import SteganoGAN
+    from decoders import DenseDecoder
+
+    steganogan = SteganoGAN.load(steg, cuda=False)
+    # Decode the message from stegano_img
+    decoded_msg = steganogan.decode(stegano_img)
     return decoded_msg
+
+
 
 #debug가 되어있다면, 실시간으로 코드 변경이 적용된다.
 if __name__ == "__main__":
