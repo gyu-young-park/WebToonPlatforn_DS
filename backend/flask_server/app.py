@@ -4,6 +4,7 @@ from io import BytesIO
 from PIL import Image
 import sys, base64
 import re
+
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -18,12 +19,9 @@ import comment_model
 tokenizer = get_tokenizer()
 model_comment = comment_model.load_model()
 
-# dhsimpson - face detector
 from facenet_pytorch import MTCNN
-
 mtcnn = MTCNN(image_size=128, margin=70)
 
-# minsoooooo - u got it , webtoonify(human image to webtoon image)
 import ugotit
 from torchvision import transforms
 import os
@@ -48,14 +46,7 @@ tensor2PIL = transforms.ToPILImage('RGB')
     # images_webtoon = images_webtoon[0].squeeze()#.detach().cpu().numpy().transpose(1,2,0)
     # images_webtoon = tensor2img(images_webtoon)
 
-'''
-shin++ 15:05, 2020/10/21 head
-'''
-import os
 
-'''
-shin++ 15:05, 2020/10/21 tail
-'''
 
 
 tokenizer = get_tokenizer()
@@ -99,7 +90,7 @@ def run_model():
     # convert 
     images_webtoon = tensor2img(images_webtoon)
     images_webtoon = RGB2BGR(images_webtoon)
-    save_img(images_webtoon,"./../../file_image.png")
+    save_img(images_webtoon,"file_image.png")
     # images_webtoon = torch.from_numpy(images_webtoon)
     # images_webtoon = np.ndarray(images_webtoon)
     # images_webtoon.save(os.path.join("file_image.png"))

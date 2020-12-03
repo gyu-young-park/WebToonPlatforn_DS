@@ -5,13 +5,6 @@ import person from './img/person.png'
 import rightArrow from './img/rightArrow.png'
 import {Button} from 'antd'
 import './index.css'
-import gyu from './img/gyu.png'
-import irene from './img/irene.png'
-import soo from './img/soo.png'
-import sow from './img/sow.png'
-import seo from './img/seo.png'
-import em from './img/em.png'
-import bin from './img/bin.png'
 
 //flask server
 const url ="http://localhost:5000"
@@ -37,27 +30,6 @@ const DropBox = () =>{
                 formData.append("webtoon_title", mode)
                 console.log(mode)
                 const res = await axios.post(url+'/gan/ugotit', formData, config)
-                if(FileName === 'gyu3.jpg'){
-                    setFilePath(gyu)
-                }
-                else if(FileName === 'irene.jpg'){
-                    setFilePath(irene)
-                }
-                else if(FileName === 'soo.jpeg'){
-                    setFilePath(soo)
-                }
-                else if(FileName === 'sow.jpg'){
-                    setFilePath(sow)
-                }
-                else if(FileName === 'seo.jpeg'){
-                    setFilePath(seo)
-                }
-                else if(FileName === 'em.jpg'){
-                    setFilePath(em)
-                }
-                else if(FileName === 'onebin.jpg'){
-                    setFilePath(bin)
-                }
             }
         }
         reader.readAsDataURL(e.target.files[0])
